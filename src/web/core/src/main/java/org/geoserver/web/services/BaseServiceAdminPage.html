@@ -1,0 +1,52 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<body>
+<wicket:extend>
+<form wicket:id="form" class="pt-3">
+  <fieldset>
+    <legend>
+      <wicket:message key="workspace">Workspace</wicket:message>
+      <a href="#" wicket:id="workspaceHelp" class="help-link"></a>
+    </legend>
+    <div class="gs-unordered-list-class">
+      <div class="gs-list-item-class">
+        <div wicket:id="workspace"></div>
+      </div>
+    </div>
+  </fieldset>
+  <div wicket:id="tabs" class="tabpanel"></div>
+  <div wicket:id="general"></div>
+  <wicket:child/>
+  <div wicket:id="extensions">
+    <div wicket:id="content"></div>
+  </div>
+  <div class="button-group toolbar-sticky selfclear">
+    <button wicket:id="submit" class="form-button-save primary" type="submit"><wicket:message key="save"/></button>
+    <a href="#a" class="form-button-apply button outline-primary" wicket:id="apply"><wicket:message key="apply">Apply</wicket:message></a>
+    <button wicket:id="cancel" class="form-button-cancel outline-danger" type="submit"><wicket:message key="cancel"/></button>
+  </div>
+</form>
+<div wicket:id="dialog"></div>
+
+  <wicket:fragment id="stringFragment" wicket:id="stringFragment">
+    <div class="gs-form">
+      <div class="gs-form-group">
+        <label for="title"><wicket:message key="titleMsg">Title</wicket:message></label>
+        <input type="text" wicket:id="title"/>
+      </div>
+      <div class="gs-form-group">
+        <label for="abstract"><wicket:message key="abstract">Abstract</wicket:message></label>
+        <textarea wicket:id="abstract" class="field textarea" rows="10" cols="30"></textarea>
+      </div>
+    </div>
+  </wicket:fragment>
+  <wicket:fragment id="internationalStringFragment" wicket:id="internationalStringFragment">
+    <div class="gs-form">
+      <div class="">
+        <div id="titleAndAbstract" wicket:id="titleAndAbstract"/>
+      </div>
+    </div>
+  </wicket:fragment>
+
+</wicket:extend>
+</body>
+</html>

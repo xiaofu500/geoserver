@@ -1,0 +1,69 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<link rel="stylesheet" href="GeoServerHomePage.css">
+<body>
+<wicket:extend>
+<div id="chooser" wicket:id="chooser">
+  <form wicket:id="form">
+    <div class="select">
+			<i wicket:id="workspace.icon"></i>
+			<span wicket:id="workspace"/>
+	  </div>
+    <div class="select">
+		  <i wicket:id="layer.icon"></i>
+		  <span wicket:id="layer"/>
+	  </div>
+    <div id="refresh">
+		  <a href="#" wicket:id="refresh">refresh</a>
+	  </div>
+  </form>
+</div>
+
+<fieldset wicket:id="administration">
+	<legend><span><wicket:message key="administration">Administration</wicket:message></span></legend>
+	<div class="gs-form" wicket:id="adminContent">
+		<span wicket:id="content"/>
+	</div>
+</fieldset>
+
+<div id="welcome">
+	<p>
+		<span wicket:id="welcome"></span>
+		<span wicket:id="belongsTo"></span>
+	</p>
+</div>
+
+<div id="preview">
+	<div wicket:id="previewContent">
+		<span wicket:id="content"/>
+	</div>
+	<p>
+	<p/>
+</div>
+
+<div id="services">
+	<span wicket:id="serviceList"/>
+</div>
+
+<div id="capabilities">
+  <h3 wicket:id="serviceCapabilities" />
+
+  <div wicket:id="providedCaps">
+    <div wicket:id="capsList" class="service-links"/>
+  </div>
+</div>
+
+<p>
+	<span wicket:id="footerMessage"></span> <span wicket:id="footerContact"></span>
+</p>
+
+	<wicket:fragment wicket:id="text">
+		<input type="text" wicket:id="text"/>
+	</wicket:fragment>
+
+	<wicket:fragment wicket:id="select">
+		<select wicket:id="select"/>
+	</wicket:fragment>
+	
+</wicket:extend>
+</body>
+</html>

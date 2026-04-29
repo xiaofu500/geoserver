@@ -1,0 +1,24 @@
+{
+    "$schema":"https://json-schema.org/draft/2020-12/schema",
+
+    "title":"envelope",
+    "type":"object",
+
+    "properties":{
+        "xmin":{
+            "title":"xmin",
+            "type":"number"},
+        "ymin":{
+            "title":"ymin",
+            "type":"number"},
+        "xmax":{
+            "title":"xmax",
+            "type":"number"},
+        "ymax":{
+            "title":"ymax",
+            "type":"number"},
+        "spatialReference":{
+            "$ref" : "spatialreference.json"}
+    },
+    "required":["xmin","ymin","xmax","ymax"]
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-WCSRequestBuilderPanel gs-form">
+        <div class="gs-form">
+          <div class="gs-form-group">
+            <label for="version">
+              <wicket:message key="version">wcs_version</wicket:message>
+            </label>
+            <select wicket:id="version" class="w-md"/>
+          </div>
+          <div class="gs-form-group">
+            <label for="name"><wicket:message key="name">coverage</wicket:message></label>
+            <select wicket:id="coverage" class="w-md"/>
+          </div>
+          <a href="#" wicket:id="describeCoverage"><wicket:message key="describe">describe</wicket:message></a>
+        </div>
+        <div class="gs-form" wicket:id="details">
+          <div class="gs-form-group">
+            <label for="envelope">
+              <wicket:message key="envelope">bounds</wicket:message>
+            </label>
+            <div wicket:id="envelope"/>
+          </div>
+          <div class="gs-list-item-class" wicket:id="sourceGridContainer">
+            <div class="gs-form">
+              <div class="choiceItem">
+                <input id="manualGrid" type="checkbox" wicket:id="manualGrid"/>
+                <label for="manualGrid">
+                  <wicket:message key="manualGrid">manualGrid</wicket:message>
+                </label>
+              </div>
+              <div class="gs-form-group">
+                <div wicket:id="sourceGrid"/>
+              </div>
+            </div>
+          </div>
+          <div class="gs-form" wicket:id="targetLayoutContainer">
+            <div class="gs-form-group">
+              <label for="targetLayout">
+                <wicket:message key="targetLayout">targetLayout</wicket:message>
+              </label>
+              <div class="gs-unordered-list-class">
+                <div class="gs-list-item-class">
+                  <select wicket:id="targetLayout" class="w-fit"/>
+                </div>
+              </div>
+            </div>
+            <div class="gs-list-item-class">
+              <div wicket:id="targetGridToWorld" class="w-fit"/>
+            </div>
+          </div>
+          <div class="gs-form-group">
+            <label for="targetCRS">
+              <wicket:message key="targetCRS">targetCRS</wicket:message>
+            </label>
+            <span wicket:id="targetCRS"/>
+          </div>
+          <div class="gs-form-group">
+            <label for="format">
+              <wicket:message key="format">output_format</wicket:message>
+            </label>
+            <select wicket:id="format" class="w-md"/>
+          </div>
+        </div>
+        <div wicket:id="feedback"/>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

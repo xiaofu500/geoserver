@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-CopyFromLayerPanel">
+        <div wicket:id="copyFromLayerDialog"></div>
+        <fieldset>
+          <legend>
+            <span>
+              <wicket:message key="header"></wicket:message>
+            </span>
+          </legend>
+          <div class="gs-form">
+            <div class="gs-input-group">
+              <select wicket:id="layer"></select>
+              <a class="button" href="#" wicket:id="link">
+                <wicket:message key="actionCopy"></wicket:message>
+              </a>
+            </div>
+            <span wicket:id="copyFeedback"></span>
+          </div>
+        </fieldset>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

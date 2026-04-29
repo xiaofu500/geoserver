@@ -1,0 +1,90 @@
+<wicket:panel>
+  <div>
+    <div class="gs-sidebar-filter">
+      <div class="gs-sidebar-search" wicket:id="myCustomSearch"></div>
+  
+      <div class="gs-sidebar-new" wicket:id="newMenu">
+        <button
+          id="gs-sidebar-new-toggle"
+          class="gs-sidebar-new-button"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="gs-sidebar-new-menu"
+        >
+          <span aria-hidden="true">+</span>
+          <span>New</span>
+        </button>
+        <ul id="gs-sidebar-new-menu" class="gs-sidebar-new-menu" hidden="hidden">
+          <li wicket:id="newMenuItems">
+            <a wicket:id="link">
+              <span wicket:id="label">New item</span><span wicket:id="ctxIndicator" class="gs-ctx-indicator" aria-hidden="true"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div wicket:id="globalSectionContainer">
+      <h6>
+        <div class="gs-section-header">
+          <i wicket:id="globalIcon"></i>
+          <a href="#" wicket:id="globalSectionSelect">
+            <wicket:message key="NavigationTreePanel.global">GLOBAL</wicket:message>
+          </a>
+        </div>
+        <span class="gs-count" wicket:id="globalCount">0</span>
+      </h6>
+
+      <div wicket:id="globalSectionBody" role="region" aria-label="Global content">
+        <div wicket:id="workspacesScroll">
+          <ul>
+            <li wicket:id="workspaces">
+              <div class="gs-workspace-header">
+                <div>
+                  <div
+                    class="gs-toggle-button"
+                    wicket:id="workspaceToggle"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Toggle workspace layers">
+                    <span wicket:id="workspaceToggleIcon" class="gs-toggle-caret" aria-hidden="true"></span>
+                  </div>
+                  <i wicket:id="workspaceIcon"></i>
+                  <a href="#" wicket:id="workspaceSelect">
+                    <span wicket:id="workspaceName">Workspace</span>
+                  </a>
+                </div>
+                <div>
+                  <span class="gs-count" wicket:id="workspaceLayerCount">0</span>
+                </div>
+              </div>
+              <div wicket:id="layersScroll" role="region" aria-label="Workspace layers">
+                <ul>
+                  <li wicket:id="workspaceChildren" class="gs-layer-item">
+                    <i wicket:id="layerIcon"></i>
+                    <a href="#" wicket:id="layerSelect">
+                      <span wicket:id="layerName">Layer</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div wicket:id="layersPagination" class="gs-pagination" data-section="layers"></div>
+            </li>
+          </ul>
+        </div>
+        <ul class="gs-global-list" wicket:id="globalChildrenContainer">
+          <li wicket:id="globalChildren" class="gs-layer-item">
+            <i wicket:id="layerIcon"></i>
+            <a href="#" wicket:id="layerSelect">
+              <span wicket:id="layerName">Layer</span>
+            </a>
+          </li>
+        </ul>
+        <div wicket:id="globalPagination" class="gs-pagination" data-section="global"></div>
+      </div>
+    </div>
+
+    <div class="gs-no-data" wicket:id="noDataMessage">No data available</div>
+  </div>
+</wicket:panel>

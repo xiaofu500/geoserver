@@ -1,0 +1,157 @@
+/* (c) 2014 - 2016 Open Source Geospatial Foundation - all rights reserved
+ * (c) 2001 - 2013 OpenPlans
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.wps.web;
+
+import java.io.Serial;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.validator.RangeValidator;
+import org.geoserver.web.data.store.panel.DirectoryParamPanel;
+import org.geoserver.web.services.AdminPagePanel;
+import org.geoserver.web.services.BaseServiceAdminPage;
+import org.geoserver.web.services.DisabledVersionsPanel;
+import org.geoserver.web.wicket.ParamResourceModel;
+import org.geoserver.wps.WPSInfo;
+
+/**
+ * Configure the {@link WPSInfo} service settings.
+ *
+ * @author Andrea Aime - GeoSolutions
+ */
+public class WPSAdminPage extends BaseServiceAdminPage<WPSInfo> {
+
+    public WPSAdminPage() {
+        super();
+    }
+
+    public WPSAdminPage(WPSInfo service) {
+        super(service);
+    }
+
+    public WPSAdminPage(PageParameters pageParams) {
+        super(pageParams);
+    }
+
+    @Override
+    protected Class<WPSInfo> getServiceClass() {
+        return WPSInfo.class;
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "WPS";
+    }
+
+    @Override
+    protected String getServiceType() {
+        return "WPS";
+    }
+
+    @Override
+    protected AdminPagePanel buildPanel(String id, IModel<WPSInfo> info, Form form) {
+        return new WPSAdminPanel(id, info, form);
+    }
+
+    @Override
+    protected void handleSubmit(WPSInfo info) {
+        super.handleSubmit(info);
+    }
+
+    private class WPSAdminPanel extends AdminPagePanel {
+        public WPSAdminPanel(String id, IModel info, Form form) {
+            super(id, info);
+
+            // service control
+            add(new DisabledVersionsPanel(
+                    "disabledVersions", new PropertyModel<>(info, "disabledVersions"), getServiceType()));
+
+            // service settings
+            TextField<Integer> connectionTimeout = new TextField<>("connectionTimeout", Integer.class);
+            connectionTimeout.add(RangeValidator.minimum(-1));
+            add(connectionTimeout);
+
+            TextField<Integer> maxSynchProcesses = new TextField<>("maxSynchronousProcesses", Integer.class);
+            maxSynchProcesses.add(RangeValidator.minimum(1));
+            add(maxSynchProcesses);
+
+            TextField<Integer> maxSynchExecutionTime = new TextField<>("maxSynchronousExecutionTime", Integer.class);
+            maxSynchExecutionTime.add(RangeValidator.minimum(-1));
+            add(maxSynchExecutionTime);
+
+            TextField<Integer> maxSynchTotalTime = new TextField<>("maxSynchronousTotalTime", Integer.class);
+            maxSynchTotalTime.add(RangeValidator.minimum(-1));
+            add(maxSynchTotalTime);
+
+            TextField<Integer> maxAsynchProcesses = new TextField<>("maxAsynchronousProcesses", Integer.class);
+            maxAsynchProcesses.add(RangeValidator.minimum(1));
+            add(maxAsynchProcesses);
+
+            TextField<Integer> maxAsynchExecutionTime = new TextField<>("maxAsynchronousExecutionTime", Integer.class);
+            maxAsynchExecutionTime.add(RangeValidator.minimum(-1));
+            add(maxAsynchExecutionTime);
+
+            TextField<Integer> maxAsynchTotalTime = new TextField<>("maxAsynchronousTotalTime", Integer.class);
+            maxAsynchTotalTime.add(RangeValidator.minimum(-1));
+            add(maxAsynchTotalTime);
+
+            TextField<Integer> resourceExpirationTimeout = new TextField<>("resourceExpirationTimeout", Integer.class);
+            resourceExpirationTimeout.add(RangeValidator.minimum(0));
+            add(resourceExpirationTimeout);
+
+            // GeoServerFileChooser chooser = new GeoServerFileChooser("storageDirectory",
+            // new PropertyModel<String>(info, "storageDirectory"));
+            DirectoryParamPanel chooser = new DirectoryParamPanel(
+                    "storageDirectory",
+                    new PropertyModel<>(info, "storageDirectory"),
+                    new ParamResourceModel("storageDirectory", WPSAdminPage.this),
+                    false);
+            add(chooser);
+            add(new DirectoryParamPanel(
+                    "externalOutputDirectory",
+                    new PropertyModel<>(info, "externalOutputDirectory"),
+                    new ParamResourceModel("externalOutputDirectory", WPSAdminPage.this),
+                    false));
+
+            form.add(new TotalTimeValidator(maxSynchTotalTime, maxSynchExecutionTime));
+            form.add(new TotalTimeValidator(maxAsynchTotalTime, maxAsynchExecutionTime));
+        }
+    }
+
+    /** Validator that checks that the total time is greater than the execution time */
+    class TotalTimeValidator extends AbstractFormValidator {
+
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        private FormComponent<Integer> totalTime;
+        private FormComponent<Integer> executionTime;
+
+        public TotalTimeValidator(FormComponent<Integer> totalTime, FormComponent<Integer> executionTime) {
+            this.totalTime = totalTime;
+            this.executionTime = executionTime;
+        }
+
+        @Override
+        public FormComponent<?>[] getDependentFormComponents() {
+            return new FormComponent[] {totalTime, executionTime};
+        }
+
+        @Override
+        public void validate(Form<?> form) {
+            if (executionTime.getConvertedInput() != null
+                    && totalTime.getConvertedInput() != null
+                    && totalTime.getConvertedInput() != 0
+                    && totalTime.getConvertedInput() < executionTime.getConvertedInput()) {
+                form.error(new ParamResourceModel("totalTimeError", getPage()).getString());
+            }
+        }
+    }
+}

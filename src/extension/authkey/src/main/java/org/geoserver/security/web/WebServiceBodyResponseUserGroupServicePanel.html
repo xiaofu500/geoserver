@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:wicket="http://wicket.apache.org/">
+<body>
+  <wicket:extend>
+    <div class="gs-unordered-list-class">
+      <div class="gs-list-item-class">
+          <fieldset>
+          <legend>
+                <span><wicket:message key="webServiceBodyResponseUserGroupParameters"></wicket:message></span>
+                <a href="#" wicket:id="webServiceBodyResponseUserGroupParametersHelp" class="help-link"></a>
+          </legend>
+              <div class="gs-form">
+                  <div class="gs-form-group">
+                     <label for="searchRoles"><wicket:message key="searchRoles"></wicket:message></label>
+                     <input id="searchRoles" wicket:id="searchRoles" type="text"></input>
+                  </div>
+                  
+                  <div class="gs-form-group">
+                     <label for="availableGroups"><wicket:message key="availableGroups"></wicket:message></label>
+                     <input id="availableGroups" wicket:id="availableGroups" type="text"></input>
+                  </div>
+                  
+                  <div class="gs-form-group">
+                    <label ><wicket:message key="roleServiceName"></wicket:message></label>
+                    <select wicket:id="roleServiceName" class="w-md"></select>
+                  </div>
+              </div>
+          </fieldset>
+      </div>
+     </div>
+  </wicket:extend>
+</body>
+</html>

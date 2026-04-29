@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-GenerateDomainPanel">
+        <div class="gs-unordered-list-class">
+          <div class="gs-list-item-class">
+            <fieldset>
+              <legend>
+                <wicket:message key="GenerateDomainPanel.header"></wicket:message>
+              </legend>
+              <div class="gs-form">
+                <div class="gs-form-group">
+                  <label for="method">
+                    <wicket:message key="method"></wicket:message>
+                  </label>
+                  <select id="method" wicket:id="method" class="w-fit"></select>
+                </div>
+                <div class="gs-form-group">
+                  <label for="tableName">
+                    <wicket:message key="tableName"></wicket:message>
+                  </label>
+                  <select id="tableName" wicket:id="tableName" class="w-fit"></select>
+                </div>
+                <div class="gs-form-group">
+                  <label for="valueAttributeName">
+                    <wicket:message key="valueAttributeName"></wicket:message>
+                  </label>
+                  <select id="valueAttributeName" wicket:id="valueAttributeName" class="w-fit"></select>
+                </div>
+                <div class="gs-form-group">
+                  <label for="defAttributeName">
+                    <wicket:message key="defAttributeName"></wicket:message>
+                  </label>
+                  <select id="defAttributeName" wicket:id="defAttributeName" class="w-fit"></select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="gs-list-item-class">
+            <wicket:message key="confirmGenerate"></wicket:message>
+          </div>
+          <div class="gs-list-item-class">
+            <span wicket:id="generateFeedback"></span>
+          </div>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

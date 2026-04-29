@@ -1,0 +1,32 @@
+/*
+ ----------------------------------------------------------
+
+
+This is the panel-specific .css file for the panel defined in class FileInput
+
+The panel's html will be contained in a <div class='gs-panel-FileInput'>
+
+Your css selectors should look like this to avoid modifying styles outside the panel:
+
+.gs-panel-FileInput ...specific css selector... {
+      ... styling ...
+}
+
+
+ ----------------------------------------------------------
+*/
+
+.gs-panel-FileInput .gs-panel-GeoServerDialog_ContentsPage form {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.gs-panel-FileInput .gs-panel-GeoServerDialog_ContentsPage .button-group {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    background-color: var(--gs-body-bg);
+}

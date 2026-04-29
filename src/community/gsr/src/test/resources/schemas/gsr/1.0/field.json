@@ -1,0 +1,25 @@
+{
+    "$schema":"https://json-schema.org/draft/2020-12/schema",
+    "$id":"http://schemas.opengis.net/gsr/1.0/field.json",
+    "title":"field",
+    "type":"object",
+    "properties":{
+       "name":{
+          "title":"field name",
+          "type":"string"
+       },
+       "type":{
+          "title":"value type",
+          "type":"string"
+       },
+       "alias":{
+          "title":"alias of the field name for display purposes",
+          "type":["null","string"]
+       },
+       "length":{
+          "title":"length of the field",
+          "type":"integer"
+       }
+    },
+    "required":["name","type"]
+}

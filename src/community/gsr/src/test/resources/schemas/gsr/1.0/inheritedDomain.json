@@ -1,0 +1,17 @@
+{
+   "$schema":"https://json-schema.org/draft/2020-12/schema",
+
+    "title":"range domain",
+    "type":"object",
+    "extends":{
+        "$ref":"domain.json"
+    },
+    "properties":{
+        "type":{
+            "title":"domain type",
+            "type":"string",
+            "enum":["inherited"]
+        }
+    },
+    "required":["type"]
+}

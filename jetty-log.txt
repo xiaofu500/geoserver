@@ -1,0 +1,225 @@
+﻿[INFO] Scanning for projects...
+Downloading from central: https://repo.maven.apache.org/maven2/com/github/ekryd/sortpom/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/commonjava/maven/plugins/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/pl/project13/maven/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/com/diffplug/spotless/maven-metadata.xml
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/jetty/maven-metadata.xml
+Progress (1): 231 B
+Progress (2): 231 B | 249 B
+                           
+Downloaded from central: https://repo.maven.apache.org/maven2/com/github/ekryd/sortpom/maven-metadata.xml (231 B at 264 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/ruleoftech/maven-metadata.xml
+Progress (2): 249 B | 1.3 kB
+                            
+Downloaded from central: https://repo.maven.apache.org/maven2/org/commonjava/maven/plugins/maven-metadata.xml (1.3 kB at 1.5 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/maven-metadata.xml
+Progress (2): 249 B | 408 B
+                           
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/jetty/maven-metadata.xml (408 B at 1.7 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/github/spotbugs/maven-metadata.xml
+Progress (2): 249 B | 237 B
+                           
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/maven-metadata.xml (237 B at 1.0 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml
+Progress (2): 249 B | 286 B
+                           
+Downloaded from central: https://repo.maven.apache.org/maven2/com/ruleoftech/maven-metadata.xml (286 B at 1.0 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml
+Progress (2): 249 B | 240 B
+                           
+Downloaded from central: https://repo.maven.apache.org/maven2/com/github/spotbugs/maven-metadata.xml (240 B at 1.0 kB/s)
+Progress (2): 249 B | 4.6 kB
+Progress (2): 249 B | 9.7 kB
+Progress (2): 249 B | 14 kB 
+                           
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml (14 kB at 59 kB/s)
+Progress (2): 249 B | 3.1 kB
+Progress (2): 249 B | 7.7 kB
+Progress (2): 249 B | 12 kB 
+Progress (2): 249 B | 17 kB
+Progress (2): 249 B | 20 kB
+Progress (2): 249 B | 21 kB
+                           
+Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml (21 kB at 44 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/pl/project13/maven/maven-metadata.xml (249 B at 141 B/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-maven-plugin/11.0.26/jetty-maven-plugin-11.0.26.pom
+Progress (1): 1.3 kB
+Progress (1): 5.6 kB
+Progress (1): 10 kB 
+Progress (1): 13 kB
+Progress (1): 13 kB
+                   
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-maven-plugin/11.0.26/jetty-maven-plugin-11.0.26.pom (13 kB at 58 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-project/11.0.26/jetty-project-11.0.26.pom
+Progress (1): 1.0 kB
+Progress (1): 3.3 kB
+Progress (1): 6.2 kB
+Progress (1): 8.1 kB
+Progress (1): 9.8 kB
+Progress (1): 12 kB 
+Progress (1): 14 kB
+Progress (1): 16 kB
+Progress (1): 19 kB
+Progress (1): 25 kB
+Progress (1): 30 kB
+Progress (1): 41 kB
+Progress (1): 51 kB
+Progress (1): 56 kB
+Progress (1): 60 kB
+Progress (1): 63 kB
+Progress (1): 65 kB
+Progress (1): 68 kB
+Progress (1): 71 kB
+Progress (1): 74 kB
+Progress (1): 76 kB
+Progress (1): 79 kB
+Progress (1): 82 kB
+Progress (1): 85 kB
+Progress (1): 88 kB
+Progress (1): 90 kB
+Progress (1): 96 kB
+Progress (1): 99 kB
+Progress (1): 100 kB
+                    
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-project/11.0.26/jetty-project-11.0.26.pom (100 kB at 405 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-bom/2.18.3/jackson-bom-2.18.3.pom
+Progress (1): 926 B
+Progress (1): 2.0 kB
+Progress (1): 6.3 kB
+Progress (1): 15 kB 
+Progress (1): 18 kB
+Progress (1): 19 kB
+                   
+Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-bom/2.18.3/jackson-bom-2.18.3.pom (19 kB at 80 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-parent/2.18.1/jackson-parent-2.18.1.pom
+Progress (1): 1.1 kB
+Progress (1): 2.2 kB
+Progress (1): 3.6 kB
+Progress (1): 5.5 kB
+Progress (1): 6.7 kB
+                    
+Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-parent/2.18.1/jackson-parent-2.18.1.pom (6.7 kB at 29 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/fasterxml/oss-parent/61/oss-parent-61.pom
+Progress (1): 952 B
+Progress (1): 2.3 kB
+Progress (1): 3.5 kB
+Progress (1): 5.6 kB
+Progress (1): 8.6 kB
+Progress (1): 11 kB 
+Progress (1): 13 kB
+Progress (1): 15 kB
+Progress (1): 18 kB
+Progress (1): 23 kB
+                   
+Downloaded from central: https://repo.maven.apache.org/maven2/com/fasterxml/oss-parent/61/oss-parent-61.pom (23 kB at 32 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/infinispan/infinispan-bom/11.0.19.Final/infinispan-bom-11.0.19.Final.pom
+Progress (1): 1.1 kB
+Progress (1): 2.9 kB
+Progress (1): 16 kB 
+Progress (1): 18 kB
+                   
+Downloaded from central: https://repo.maven.apache.org/maven2/org/infinispan/infinispan-bom/11.0.19.Final/infinispan-bom-11.0.19.Final.pom (18 kB at 36 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/infinispan/infinispan-build-configuration-parent/11.0.19.Final/infinispan-build-configuration-parent-11.0.19.Final.pom
+Progress (1): 1.1 kB
+Progress (1): 2.9 kB
+Progress (1): 5.1 kB
+Progress (1): 7.3 kB
+Progress (1): 8.6 kB
+Progress (1): 11 kB 
+Progress (1): 13 kB
+Progress (1): 16 kB
+                   
+Downloaded from central: https://repo.maven.apache.org/maven2/org/infinispan/infinispan-build-configuration-parent/11.0.19.Final/infinispan-build-configuration-parent-11.0.19.Final.pom (16 kB at 67 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/jboss/jboss-parent/36/jboss-parent-36.pom
+Progress (1): 701 B
+Progress (1): 1.5 kB
+Progress (1): 3.9 kB
+Progress (1): 6.1 kB
+Progress (1): 7.6 kB
+Progress (1): 10 kB 
+Progress (1): 15 kB
+Progress (1): 22 kB
+Progress (1): 28 kB
+Progress (1): 32 kB
+Progress (1): 34 kB
+Progress (1): 36 kB
+Progress (1): 41 kB
+Progress (1): 48 kB
+Progress (1): 65 kB
+Progress (1): 66 kB
+                   
+Downloaded from central: https://repo.maven.apache.org/maven2/org/jboss/jboss-parent/36/jboss-parent-36.pom (66 kB at 269 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-bom/9.8/asm-bom-9.8.pom
+Progress (1): 1.1 kB
+Progress (1): 3.3 kB
+                    
+Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-bom/9.8/asm-bom-9.8.pom (3.3 kB at 14 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/testcontainers/testcontainers-bom/1.21.1/testcontainers-bom-1.21.1.pom
+Progress (1): 1.2 kB
+Progress (1): 12 kB 
+                   
+Downloaded from central: https://repo.maven.apache.org/maven2/org/testcontainers/testcontainers-bom/1.21.1/testcontainers-bom-1.21.1.pom (12 kB at 49 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-maven-plugin/11.0.26/jetty-maven-plugin-11.0.26.jar
+Progress (1): 3.8/142 kB
+Progress (1): 8.0/142 kB
+Progress (1): 12/142 kB 
+Progress (1): 12/142 kB
+Progress (1): 17/142 kB
+Progress (1): 21/142 kB
+Progress (1): 25/142 kB
+Progress (1): 29/142 kB
+Progress (1): 33/142 kB
+Progress (1): 37/142 kB
+Progress (1): 41/142 kB
+Progress (1): 46/142 kB
+Progress (1): 49/142 kB
+Progress (1): 53/142 kB
+Progress (1): 58/142 kB
+Progress (1): 62/142 kB
+Progress (1): 66/142 kB
+Progress (1): 70/142 kB
+Progress (1): 75/142 kB
+Progress (1): 79/142 kB
+Progress (1): 82/142 kB
+Progress (1): 86/142 kB
+Progress (1): 90/142 kB
+Progress (1): 95/142 kB
+Progress (1): 99/142 kB
+Progress (1): 103/142 kB
+Progress (1): 107/142 kB
+Progress (1): 112/142 kB
+Progress (1): 115/142 kB
+Progress (1): 119/142 kB
+Progress (1): 123/142 kB
+Progress (1): 127/142 kB
+Progress (1): 132/142 kB
+Progress (1): 136/142 kB
+Progress (1): 140/142 kB
+Progress (1): 142 kB    
+                    
+Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-maven-plugin/11.0.26/jetty-maven-plugin-11.0.26.jar (142 kB at 196 kB/s)
+[INFO] 
+[INFO] --------------------< org.geoserver.web:gs-web-app >--------------------
+[INFO] Building GeoServer Web Application 3.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> jetty:11.0.26:run (default-cli) > test-compile @ gs-web-app >>>
+Downloading from osgeo-snapshots: https://repo.osgeo.org/repository/snapshot/org/geoserver/gs-main/3.0.0-SNAPSHOT/gs-main-3.0.0-SNAPSHOT-tests.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.378 s
+[INFO] Finished at: 2026-04-29T15:00:25+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project gs-web-app: Could not resolve dependencies for project org.geoserver.web:gs-web-app:jar:3.0.0-SNAPSHOT
+[ERROR] dependency: org.geoserver:gs-main:jar:tests:3.0.0-SNAPSHOT (test)
+[ERROR] 	Could not find artifact org.geoserver:gs-main:jar:tests:3.0.0-SNAPSHOT in osgeo-snapshots (https://repo.osgeo.org/repository/snapshot/)
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException

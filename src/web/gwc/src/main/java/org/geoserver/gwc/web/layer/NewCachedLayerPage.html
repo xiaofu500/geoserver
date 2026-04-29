@@ -1,0 +1,24 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+<title><wicket:message key="layerList">Layer list</wicket:message></title>
+</head>
+<body>
+<wicket:extend>
+	<div wicket:id="table"></div>
+	
+	<wicket:fragment wicket:id="iconFragment">
+		<img wicket:id="layerIcon" />
+	</wicket:fragment>
+    
+  <wicket:fragment wicket:id="header">
+    <div class="gs-unordered-list-class">
+      <div class="gs-list-item-class"> <a class="button outline-primary" href="#" wicket:id="bulkConfig"><i class="gs-icon gs-icon-add"></i><wicket:message key="bulkConfig">bulk config</wicket:message></a></div>
+      <div class="gs-list-item-class"> <label wicket:id="insaneDefaultsMessage"></label></div>
+    </div>
+  </wicket:fragment>
+
+  <!-- the cascade delete confirmation dialog -->
+  <div wicket:id="dialog"></div>
+</wicket:extend>
+</body>
+</html>

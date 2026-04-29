@@ -1,0 +1,221 @@
+/* (c) 2019 Open Source Geospatial Foundation - all rights reserved
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.taskmanager.web.panel.bulk;
+
+import static org.geoserver.web.util.WebUtils.IsWicketCssFileEmpty;
+
+import java.io.Serial;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.NumberTextField;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
+import org.geoserver.taskmanager.data.Batch;
+import org.geoserver.taskmanager.data.Configuration;
+import org.geoserver.taskmanager.util.TaskManagerBeans;
+import org.geoserver.taskmanager.util.ValidationError;
+import org.geoserver.web.GeoServerBasePage;
+import org.geoserver.web.wicket.GeoServerDialog;
+import org.geoserver.web.wicket.GeoServerDialog.DialogDelegate;
+import org.geoserver.web.wicket.ParamResourceModel;
+import org.geotools.util.logging.Logging;
+
+// TODO WICKET8 - Verify this page works OK
+public class BulkInitPanel extends Panel {
+
+    private static final boolean isCssEmpty = IsWicketCssFileEmpty(BulkInitPanel.class);
+
+    @Override
+    public void renderHead(org.apache.wicket.markup.head.IHeaderResponse response) {
+        super.renderHead(response);
+        // if the panel-specific CSS file contains actual css then have the browser load the css
+        if (!isCssEmpty) {
+            response.render(org.apache.wicket.markup.head.CssHeaderItem.forReference(
+                    new org.apache.wicket.request.resource.PackageResourceReference(
+                            getClass(), getClass().getSimpleName() + ".css")));
+        }
+    }
+
+    @Serial
+    private static final long serialVersionUID = -7787191736336649903L;
+
+    private static final Logger LOGGER = Logging.getLogger(BulkInitPanel.class);
+
+    private IModel<String> workspaceModel = new Model<>("%");
+
+    private IModel<String> configurationModel = new Model<>("%");
+
+    private List<Batch> batches;
+
+    public BulkInitPanel(String id) {
+        super(id);
+    }
+
+    @Override
+    public void onInitialize() {
+        super.onInitialize();
+
+        GeoServerDialog dialog = new GeoServerDialog("dialog");
+        add(dialog);
+        dialog.setInitialHeight(100);
+
+        Form<?> form = new Form<Object>("form");
+        add(form);
+
+        TextField<String> workspace = new TextField<>("workspace", workspaceModel);
+        form.add(workspace);
+
+        TextField<String> configuration = new TextField<>("configuration", configurationModel);
+        form.add(configuration.setRequired(true));
+
+        NumberTextField<Integer> startDelay = new NumberTextField<>("startDelay", new Model<Integer>(0), Integer.class);
+        startDelay.setMinimum(0);
+        form.add(startDelay);
+
+        NumberTextField<Integer> betweenDelay =
+                new NumberTextField<>("betweenDelay", new Model<Integer>(0), Integer.class);
+        betweenDelay.setMinimum(0);
+        form.add(betweenDelay);
+
+        Label configsFound =
+                new Label("configsFound", new ParamResourceModel("configsFound", this, new IModel<String>() {
+                    @Serial
+                    private static final long serialVersionUID = -6328441242635771092L;
+
+                    @Override
+                    public String getObject() {
+                        return Integer.toString(batches.size());
+                    }
+
+                    @Override
+                    public void setObject(String object) {}
+
+                    @Override
+                    public void detach() {}
+                }));
+        form.add(configsFound.setOutputMarkupId(true));
+
+        AjaxSubmitLink run = new AjaxSubmitLink("run") {
+            @Serial
+            private static final long serialVersionUID = -3288982013478650146L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target) {
+                if (batches.size() == 0) {
+                    error(new StringResourceModel("noConfigs", BulkInitPanel.this).getString());
+                    ((GeoServerBasePage) getPage()).addFeedbackPanels(target);
+                } else {
+                    dialog.showOkCancel(target, new DialogDelegate() {
+                        @Serial
+                        private static final long serialVersionUID = -8203963847815744909L;
+
+                        @Override
+                        protected Component getContents(String id) {
+                            int time =
+                                    ((batches.size() - 1) * betweenDelay.getModelObject() + startDelay.getModelObject())
+                                            / 60;
+                            return new Label(
+                                    id,
+                                    new ParamResourceModel(
+                                            "initConfigs",
+                                            BulkInitPanel.this,
+                                            Integer.toString(batches.size()),
+                                            Integer.toString(time)));
+                        }
+
+                        @Override
+                        protected boolean onSubmit(AjaxRequestTarget target, Component contents) {
+                            TaskManagerBeans beans = TaskManagerBeans.get();
+                            beans.getBjService()
+                                    .scheduleNow(
+                                            batches,
+                                            startDelay.getModelObject(),
+                                            betweenDelay.getModelObject(),
+                                            new Consumer<Batch>() {
+
+                                                @Override
+                                                public void accept(Batch batch) {
+                                                    tryToValidate(beans, batch.getConfiguration());
+                                                }
+                                            });
+                            info(new ParamResourceModel(
+                                            "initializingConfigs", BulkInitPanel.this, Integer.toString(batches.size()))
+                                    .getString());
+                            ((GeoServerBasePage) getPage()).addFeedbackPanels(target);
+                            return true;
+                        }
+                    });
+                }
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target) {
+                ((GeoServerBasePage) getPage()).addFeedbackPanels(target);
+            }
+        };
+        form.add(run);
+
+        workspace.add(new AjaxFormSubmitBehavior("change") {
+            @Serial
+            private static final long serialVersionUID = 3397757222203749030L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target) {
+                updateConfigs();
+                target.add(configsFound);
+                target.add(run);
+            }
+        });
+        configuration.add(new AjaxFormSubmitBehavior("change") {
+            @Serial
+            private static final long serialVersionUID = 3397757222203749030L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target) {
+                updateConfigs();
+                target.add(configsFound);
+                target.add(run);
+            }
+        });
+
+        updateConfigs();
+    }
+
+    private void tryToValidate(TaskManagerBeans beans, Configuration config) {
+        config = beans.getDao().init(config);
+        if (!beans.getInitConfigUtil().isInitConfig(config)) {
+            List<ValidationError> errors = beans.getTaskUtil().validate(config);
+            if (!errors.isEmpty()) {
+                StringBuffer errorMessages = new StringBuffer();
+                for (ValidationError error : errors) {
+                    errorMessages.append("\n").append(error.toString());
+                }
+                LOGGER.log(
+                        Level.WARNING, "Validation for " + config.getName() + " failed: " + errorMessages.toString());
+                return;
+            } else {
+                config.setValidated(true);
+                beans.getDao().save(config);
+            }
+        }
+    }
+
+    private void updateConfigs() {
+        batches = TaskManagerBeans.get()
+                .getDao()
+                .findInitBatches(workspaceModel.getObject(), configurationModel.getObject());
+    }
+}

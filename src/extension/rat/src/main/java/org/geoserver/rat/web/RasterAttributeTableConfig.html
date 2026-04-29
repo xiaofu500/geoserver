@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head/>
+  <body>
+    <form name="theForm">
+      <wicket:panel>
+        <div class="gs-panel-RasterAttributeTableConfig">
+          <fieldset>
+            <legend>
+              <span>
+                <wicket:message key="RasterAttributeTableConfig.title">RAT</wicket:message>
+              </span>
+            </legend>
+            <div class="gs-unordered-list-class">
+              <div class="gs-form genericToolbar" wicket:id="styleToolbar">
+                <div class="gs-form-group">
+                  <span>Band</span>
+                  <select wicket:id="bands" class="w-md" />
+                </div>
+                <div class="gs-form-group">
+                  <span>Classification</span>
+                  <select wicket:id="classifications" class="w-md" />
+                </div>
+                <div class="gs-form-group">
+                  <span>Style name</span>
+                  <div class="gs-input-group">
+                    <input class="w-md" type="text" wicket:id="styleName"/>
+                    <button wicket:id="createStyles" type="submit" class="w-md">
+                      <wicket:message key="RasterAttributeTableConfig.create">Create style</wicket:message>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="gs-form-group">
+                <div wicket:id="rat" class="largeTable"/>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </wicket:panel>
+      <button type="submit"/>
+    </form>
+  </body>
+</html>

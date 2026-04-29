@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!-- 
+ Copyright (C) 2014 - Open Source Geospatial Foundation. All rights reserved.
+ This code is licensed under the GPL 2.0 license, available at the root
+ application directory.
+ -->
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head/>
+  <body>
+    <form name="theForm">
+      <wicket:panel>
+        <div class="gs-panel-BilLayerConfigPanel">
+          <div class="gs-unordered-list-class">
+            <div class="gs-list-item-class">
+              <fieldset>
+                <legend>
+                  <span>
+                    <wicket:message key="bilFormatSettings">BIL Format Settings</wicket:message>
+                  </span>
+                </legend>
+                <div class="gs-form">
+                  <div class="gs-form-group">
+                    <label for="defaultDataTypeAttribute">
+                      <wicket:message key="defaultDataTypeAttribute">Default Data Type Attribute</wicket:message>
+                    </label>
+                    <select class="w-fit" id="defaultDataTypeAttribute" type="text" wicket:id="bil.defaultDataTypeAttribute"/>
+                  </div>
+                  <div class="gs-form-group">
+                    <label for="byteOrderAttribute">
+                      <wicket:message key="byteOrderAttribute">Byte Order</wicket:message>
+                    </label>
+                    <select class="w-fit" id="byteOrderAttribute" type="text" wicket:id="bil.byteOrderAttribute"/>
+                  </div>
+                  <div class="gs-form-group">
+                    <label for="noDataOutputAttribute">
+                      <wicket:message key="noDataOutputAttribute">Default NoData Output Attribute</wicket:message>
+                    </label>
+                    <input class="w-md" id="noDataOutputAttribute" type="text" wicket:id="bil.noDataOutputAttribute"/>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </wicket:panel>
+    </form>
+  </body>
+</html>

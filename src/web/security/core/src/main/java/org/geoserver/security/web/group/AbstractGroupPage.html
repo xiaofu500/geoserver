@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.apache.org/">
+<body>
+<wicket:extend>
+  <form wicket:id="form">
+
+    <fieldset>
+      <div class="gs-form">
+        <div class="gs-form-group">
+          <label for="groupname">
+            <wicket:message key="groupname">groupname</wicket:message>
+          </label>
+          <input type="text" wicket:id="groupname" id="groupname"/>
+        </div>
+        <div class="choiceItem">
+          <input type="checkbox" wicket:id="enabled" id="enabled"/>
+          <label for="enabled">
+            <wicket:message key="enabled">enabled</wicket:message>
+          </label>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="py-1">
+      <div wicket:id="roles"/>
+    </div>
+    <div class="py-1">
+      <wicket:child></wicket:child>
+    </div>
+
+    <div class="button-group toolbar-sticky selfclear">
+      <a href="#" class="form-button-save button primary" wicket:id="save">
+        <wicket:message key="save">Save</wicket:message>
+      </a>
+      <a href="#" class="form-button-cancel button outline-danger" wicket:id="cancel">
+        <wicket:message key="cancel">Cancel</wicket:message>
+      </a>
+    </div>
+  </form>
+  
+</wicket:extend>
+</body>
+</html>

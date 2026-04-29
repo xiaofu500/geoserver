@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- set parent pom to extension pom -->
+  <parent>
+    <groupId>org.geoserver</groupId>
+    <artifactId>extension</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.geoserver.extension</groupId>
+  <artifactId>gs-geofence-root</artifactId>
+  <packaging>pom</packaging>
+  <name>GeoFence security integration</name>
+
+  <modules>
+    <module>geofence</module>
+    <module>geofence-assembly</module>
+  </modules>
+
+  <profiles>
+
+    <profile>
+      <id>geofence-server</id>
+      <activation>
+        <property>
+          <name>geofence</name>
+        </property>
+      </activation>
+      <modules>
+        <module>geofence-server</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>geofence-wps</id>
+      <activation>
+        <property>
+          <!-- this is ok when building from root: property (or profile) geofence will include the geofence-root
+                    module, while wps will include geofence-wps, putting properties conditions in AND.
+                    -->
+          <name>wps</name>
+        </property>
+      </activation>
+      <modules>
+        <module>geofence-wps</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>allExtensions</id>
+      <modules>
+        <module>geofence-server</module>
+        <module>geofence-wps</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>release</id>
+      <modules>
+        <module>geofence-server</module>
+        <module>geofence-wps</module>
+      </modules>
+    </profile>
+
+  </profiles>
+
+</project>

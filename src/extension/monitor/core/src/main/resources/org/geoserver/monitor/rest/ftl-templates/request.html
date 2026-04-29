@@ -1,0 +1,121 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head>
+    <style type="text/css">
+      <#include "geoserver.css" parse=false>
+      <#include "style.css" parse=false>
+    </style>
+    <style type="text/css">
+    #content {
+      margin: 2em;
+     
+    }
+    #info {
+      margin-top: 2em;
+      margin-left: 1em;
+    }
+    #info li span {
+      margin-left: 1em;
+    }
+    label {
+      line-height: 1em;
+    }
+    </style>
+  </head>
+  <body>
+  
+  <div id="content">
+    <h1><span>Request ${properties.id}</span></h1>
+    <h5>${properties.host}</h5>
+    <div id="info">
+    <form>
+    <fieldset>
+      <div class="gs-unordered-list-class">
+        <div class="gs-list-item-class">
+           <label>Started</label><span>${properties.startTime}</span>
+        </div>
+        <div class="gs-list-item-class">
+           <label>Finished</label><span>${properties.endTime}</span>
+        </div>
+        <div class="gs-list-item-class">
+           <label>Total</label><span>${properties.totalTime} ms</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>
+        <span>HTTP</span>
+      </legend>
+      <div class="gs-unordered-list-class">
+        <div class="gs-list-item-class">
+           <label>Method</label><span>${properties.httpMethod}</span>
+        </div>
+        <div class="gs-list-item-class">
+           <label>Path</label><span>${properties.path}</span>
+        </div>
+        <div class="gs-list-item-class">
+           <label>Query String</label><span>${properties.queryString}</span>
+        </div>
+       </div>
+    </fieldset>
+    
+    <#if properties.owsVersion != "null">
+    <fieldset>
+      <legend>
+        <span>OWS</span>
+      </legend>
+      <div class="gs-unordered-list-class">
+        <div class="gs-list-item-class">
+          <label>Service</label><span>${properties.service}</span>
+        </div>
+        <div class="gs-list-item-class">
+          <label>Operation</label><span>${properties.operation}</span>
+        </div>
+        <div class="gs-list-item-class">
+          <label>Version</label><span>${properties.owsVersion}</span>
+        </div>
+      </div>
+    </fieldset>
+    </#if>
+    
+    <fieldset>
+      <legend>
+        <span>Origin</span>
+      </legend>
+      <div class="gs-unordered-list-class">
+         <div class="gs-list-item-class">
+          <label>IP Address</label><span>${properties.remoteAddr}</span>
+        </div>
+         <div class="gs-list-item-class">
+          <label>Hostname</label><span>${properties.remoteHost}</span>
+        </div>
+         <div class="gs-list-item-class">
+          <label>Username</label><span>${properties.remoteUser}</span>
+        </div>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>
+        <span>Response</span>
+      </legend>
+      <div class="gs-unordered-list-class">
+         <div class="gs-list-item-class">
+          <label>Content Type</label><span>${properties.responseContentType}</span>
+        </div>
+        <div class="gs-list-item-class">
+          <label>Content Length</label><span>${properties.responseLength} bytes</span>
+        </div>
+        <div class="gs-list-item-class">
+          <label>Cache result</label><span>${properties.cacheResult}</span>
+        </div>
+        <div class="gs-list-item-class">
+          <label>Miss reason</label><span>${properties.missReason}</span>
+        </div>
+      </div>
+    </fieldset>
+    </form>
+    </div>
+  </div>
+  
+  </body>
+</html>

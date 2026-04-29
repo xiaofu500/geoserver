@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head/>
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-ResourceDimensionsTabPanelInfo">
+        <div class="gs-unordered-list-class">
+          <!-- TIME -->
+          <div class="gs-list-item-class">
+            <fieldset>
+              <legend>
+                <span>
+                  <wicket:message key="timeDimension">Time</wicket:message>
+                </span>
+              </legend>
+              <div wicket:id="time"/>
+            </fieldset>
+          </div>
+          <!-- ELEVATION -->
+          <div class="gs-list-item-class">
+            <fieldset>
+              <legend>
+                <span>
+                  <wicket:message key="elevDimension">Elevation</wicket:message>
+                </span>
+              </legend>
+              <div wicket:id="elevation"/>
+            </fieldset>
+          </div>
+          <!-- CUSTOM DIMENSIONS -->
+          <div class="gs-list-item-class" wicket:id="customDimensions">
+            <fieldset>
+              <legend>
+                <span wicket:id="dimensionName"/>
+              </legend>
+              <div wicket:id="dimension"/>
+            </fieldset>
+          </div>
+          <!-- CUSTOM VECTOR DIMENSIONS -->
+          <div class="gs-list-item-class">
+            <div wicket:id="vectorCustomDimPanel"/>
+          </div>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

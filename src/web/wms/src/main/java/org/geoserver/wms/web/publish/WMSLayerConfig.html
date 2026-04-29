@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head/>
+  <body>
+    <form name="theForm">
+      <wicket:panel>
+        <div class="gs-panel-WMSLayerConfig">
+          <fieldset>
+            <legend>
+              <span>
+                <wicket:message key="layerSettings">WMS Layer Settings</wicket:message>
+              </span>
+            </legend>
+            <div class="gs-unordered-list-class choiceList">
+              <div class="gs-list-item-class">
+                <input id="queryableEnabled" type="checkbox" wicket:id="queryableEnabled"/>
+                <label for="queryableEnabled">
+                  <wicket:message key="queryable">Queryable</wicket:message>
+                </label>
+              </div>
+            </div>
+            <div class="gs-form">
+              <div class="gs-form-group">
+                <label for="wmsPath">
+                  <wicket:message key="defaultWmsPath">Default WMS Path</wicket:message>
+                </label>
+                <input id="wmsPath" wicket:id="wmsPath" type="text"/>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </wicket:panel>
+    </form>
+  </body>
+</html>

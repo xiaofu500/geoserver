@@ -1,0 +1,102 @@
+/* (c) 2017 Open Source Geospatial Foundation - all rights reserved
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.metadata.web.panel;
+
+import static org.geoserver.web.util.WebUtils.IsWicketCssFileEmpty;
+
+import java.io.Serial;
+import java.util.List;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
+import org.geoserver.metadata.data.model.MetadataTemplate;
+import org.geoserver.metadata.web.MetadataTemplateTracker;
+import org.geoserver.web.wicket.GeoServerTablePanel;
+import org.geoserver.web.wicket.ImageAjaxLink;
+import org.geoserver.web.wicket.ParamResourceModel;
+
+public class TemplatesPositionPanel extends Panel {
+
+    private static final boolean isCssEmpty = IsWicketCssFileEmpty(TemplatesPositionPanel.class);
+
+    @Override
+    public void renderHead(org.apache.wicket.markup.head.IHeaderResponse response) {
+        super.renderHead(response);
+        // if the panel-specific CSS file contains actual css then have the browser load the css
+        if (!isCssEmpty) {
+            response.render(org.apache.wicket.markup.head.CssHeaderItem.forReference(
+                    new org.apache.wicket.request.resource.PackageResourceReference(
+                            getClass(), getClass().getSimpleName() + ".css")));
+        }
+    }
+
+    @Serial
+    private static final long serialVersionUID = -4645368967597125299L;
+
+    public TemplatesPositionPanel(
+            String id,
+            IModel<List<MetadataTemplate>> templates,
+            MetadataTemplateTracker tracker,
+            IModel<MetadataTemplate> model,
+            GeoServerTablePanel<MetadataTemplate> tablePanel) {
+        super(id, model);
+        ImageAjaxLink<Object> upLink = new ImageAjaxLink<>("up", "gs-icon-arrow-up") {
+            @Serial
+            private static final long serialVersionUID = -4165434301439054175L;
+
+            @Override
+            protected void onClick(AjaxRequestTarget target) {
+                int index = templates.getObject().indexOf(model.getObject());
+                tracker.switchTemplates(model.getObject(), templates.getObject().get(index - 1));
+                templates.getObject().add(index - 1, templates.getObject().remove(index));
+                ((MarkupContainer) tablePanel.get("listContainer").get("items")).removeAll();
+                tablePanel.clearSelection();
+                target.add(tablePanel);
+            }
+
+            @Override
+            protected void onComponentTag(ComponentTag tag) {
+                if (templates.getObject().indexOf(model.getObject()) == 0) {
+                    tag.put("class", "visibility-hidden");
+                } else {
+                    tag.put("class", "visibility-visible");
+                }
+            }
+        };
+        upLink.getImage().add(new AttributeModifier("alt", new ParamResourceModel("up", this)));
+        add(upLink);
+
+        ImageAjaxLink<Object> downLink = new ImageAjaxLink<>("down", "gs-icon-arrow-down") {
+            @Serial
+            private static final long serialVersionUID = -8005026702401617344L;
+
+            @Override
+            protected void onClick(AjaxRequestTarget target) {
+                int index = templates.getObject().indexOf(model.getObject());
+                tracker.switchTemplates(model.getObject(), templates.getObject().get(index + 1));
+                templates.getObject().add(index + 1, templates.getObject().remove(index));
+
+                ((MarkupContainer) tablePanel.get("listContainer").get("items")).removeAll();
+                tablePanel.clearSelection();
+                target.add(tablePanel);
+            }
+
+            @Override
+            protected void onComponentTag(ComponentTag tag) {
+                if (templates.getObject().indexOf(model.getObject())
+                        == templates.getObject().size() - 1) {
+                    tag.put("class", "visibility-hidden");
+                } else {
+                    tag.put("class", "visibility-visible");
+                }
+            }
+        };
+        downLink.getImage().add(new AttributeModifier("alt", new ParamResourceModel("down", this)));
+        add(downLink);
+    }
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-ImportTaskTable_ExceptionPanel">
+        <div class="gs-unordered-list-class">
+          <div class="gs-list-item-class">
+            <span wicket:id="message"/>
+          </div>
+        </div>
+        <textarea wicket:id="stackTrace" class="w-wide h-lg">
+  </textarea>
+        <div class="button-group button-copy">
+          <a class="button outline-primary" wicket:id="copy">
+            <wicket:message key="copy">Copy</wicket:message>
+          </a>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

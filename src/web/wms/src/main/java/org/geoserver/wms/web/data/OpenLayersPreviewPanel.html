@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head>
+    <title>
+      <wicket:message key="title">OpenLayers Widget for Wicket</wicket:message>
+    </title>
+  </head>
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-OpenLayersPreviewPanel">
+        <div class="gs-unordered-list-class horizontal-form">
+          <div class="gs-list-item-class">
+            <wicket:message key="previewOnLayer">Preview on layer: </wicket:message>
+            <a wicket:id="change.layer" href="#"/>
+          </div>
+          <div class="gs-list-item-class">
+            <label for="previewStyleGroup">
+              <wicket:message key="previewAsStyleGroup">Preview as style group: </wicket:message>
+            </label>
+            <input wicket:id="previewStyleGroup" id="previewStyleGroup" type="checkbox"/>
+            <a href="#" wicket:id="styleGroupHelp" class="help-link"/>
+          </div>
+        </div>
+        <div wicket:id="olPreview" class="bottom-margin-1em"/>
+        <div wicket:id="dialog"/>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

@@ -1,0 +1,2 @@
+org.geoserver.wms.staticRasterStore.StaticRasterFormatFactory
+org.geoserver.wms.tiffspy.GeoTIFFSpyFormatFactory

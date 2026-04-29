@@ -1,0 +1,66 @@
+/* (c) 2014 Open Source Geospatial Foundation - all rights reserved
+ * (c) 2014 Boundless
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.cluster.hazelcast.web;
+
+import static org.geoserver.cluster.hazelcast.HazelcastUtil.localIPAsString;
+import static org.geoserver.web.util.WebUtils.IsWicketCssFileEmpty;
+
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
+import org.geoserver.cluster.hazelcast.HzCluster;
+import org.geoserver.web.wicket.GeoServerDialog;
+import org.geoserver.web.wicket.SimpleAjaxLink;
+
+public class NodeLinkPanel extends Panel {
+
+    private static final boolean isCssEmpty = IsWicketCssFileEmpty(NodeLinkPanel.class);
+
+    @Override
+    public void renderHead(org.apache.wicket.markup.head.IHeaderResponse response) {
+        super.renderHead(response);
+        // if the panel-specific CSS file contains actual css then have the browser load the css
+        if (!isCssEmpty) {
+            response.render(org.apache.wicket.markup.head.CssHeaderItem.forReference(
+                    new org.apache.wicket.request.resource.PackageResourceReference(
+                            getClass(), getClass().getSimpleName() + ".css")));
+        }
+    }
+
+    GeoServerDialog dialog;
+
+    @SuppressWarnings("unchecked")
+    public NodeLinkPanel(String id, final HzCluster cluster) {
+        super(id);
+
+        add(new SimpleAjaxLink<>("link", new Model<>(localIPAsString(cluster.getHz()))) {
+            @Override
+            protected void onClick(AjaxRequestTarget target) {
+                // dialog.show(target);
+                dialog.showOkCancel(target, new GeoServerDialog.DialogDelegate() {
+
+                    @Override
+                    protected boolean onSubmit(AjaxRequestTarget target, Component contents) {
+                        return true;
+                    }
+
+                    @Override
+                    protected Component getContents(String id) {
+                        return new NodeInfoDialog(id);
+                    }
+                });
+            }
+        });
+
+        add(new Label("cluster", cluster.getHz().getConfig().getClusterName()));
+
+        add(dialog = new GeoServerDialog("dialog"));
+        dialog.setInitialHeight(350);
+        dialog.setInitialWidth(300);
+    }
+}

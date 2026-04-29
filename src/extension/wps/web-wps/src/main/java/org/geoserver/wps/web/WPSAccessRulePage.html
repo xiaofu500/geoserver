@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wicket="http://wicket.apache.org/">
+<wicket:head>
+     <title><wicket:message key="title">WPS security</wicket:message></title>
+</wicket:head>
+<body>
+<wicket:extend>
+    <form wicket:id="form" class="pt-3">
+    	<div class="gs-unordered-list-class">
+   			<div class="gs-list-item-class">
+				<div wicket:id="processFilterTable"></div>
+			</div>
+            <div class="gs-list-item-class pt-3">
+            <fieldset>
+              <legend>
+                <span><wicket:message key="globalLimits">globalLimits</wicket:message></span>
+              </legend>
+              <div class="gs-unordered-list-class">
+                <div class="gs-list-item-class gs-form-group"> 
+                  <label><wicket:message key="maxInputSizeMB">"maxInputSizeMB"</wicket:message></label>
+                  <input type="text" wicket:id="maxComplexInputSize" class="field" />
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>
+                <span><wicket:message key="complexInputs">complexInputs</wicket:message></span>
+              </legend>
+              <div class="gs-unordered-list-class">
+                <div class="gs-list-item-class choiceItem">
+                  <input wicket:id="remoteInputDisabled" type="checkbox" />
+                  <label for="remoteInputDisabled"><wicket:message key="remoteInputDisabled">remoteInputDisabled</wicket:message></label>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>
+                <span><wicket:message key="processAccessMode">Process access mode</wicket:message></span>
+                <a href="#" wicket:id="processAccessModeHelp" class="help-link"></a>
+              </legend>
+              <div class="gs-form">
+                <span id="processAccessMode" class="choiceList" wicket:id="processAccessMode">
+                  <input type="radio"/>mode 1
+                </span>
+              </div>
+            </fieldset>
+            </div>
+      </div>
+      <div class="button-group toolbar-sticky selfclear">
+        <button wicket:id="submit" class="form-button-save primary" type="submit"><wicket:message key="save"/></button>
+        <button wicket:id="apply" class="form-button-apply outline-primary" type="submit"><wicket:message key="apply"/></button>
+        <button wicket:id="cancel" class="form-button-cancel outline-danger" type="submit"><wicket:message key="cancel"/></button> 
+      </div>
+	</form>
+	
+    <wicket:fragment wicket:id="enabledFragment">
+        <input type="checkbox" wicket:id="enabled"/>
+    </wicket:fragment>
+    
+    <wicket:fragment wicket:id="rolesFragment">
+       <textarea wicket:id="roles" autocomplete="off" class="w-md"></textarea>
+    </wicket:fragment>
+    
+    <wicket:fragment wicket:id="linkFragment">
+        <a href="#" wicket:id="link"><wicket:message key="edit">edit...</wicket:message></a>
+    </wicket:fragment>
+    
+</wicket:extend>
+</body>
+</html>

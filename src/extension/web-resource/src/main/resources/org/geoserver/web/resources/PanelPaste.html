@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-PanelPaste">
+        <h3>
+          <wicket:message key="titlePaste"/>
+        </h3>
+        <div wicket:id="feedback"/>
+        <div class="gs-unordered-list-class">
+          <div class="gs-list-item-class">
+            <label>
+              <wicket:message key="source"/>
+            </label>
+            <input wicket:id="source" size="40" type="text" readonly="readonly"/>
+            <br/>
+            <span wicket:id="labelMove">
+              <wicket:message key="moveMessage"/>
+            </span>
+            <span wicket:id="labelCopy">
+              <wicket:message key="copyMessage"/>
+            </span>
+          </div>
+          <div class="gs-list-item-class">
+            <label>
+              <wicket:message key="directory"/>
+            </label>
+            <input wicket:id="directory" size="40" type="text"/>
+            <br/>
+            <small>
+              <wicket:message key="createDirectory"/>
+            </small>
+          </div>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

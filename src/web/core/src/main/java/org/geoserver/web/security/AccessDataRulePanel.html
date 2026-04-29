@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head/>
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-AccessDataRulePanel">
+        <div wicket:id="listContainer">
+          <span>
+            <input type="checkbox" wicket:id="selectAll"/>
+            <wicket:message key="grantAnyRole">Grant access to any role</wicket:message>
+          </span>
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <wicket:message key="availableRoles">Available Roles</wicket:message>
+                </th>
+                <th>
+                  <wicket:message key="read">Read</wicket:message>
+                </th>
+                <th>
+                  <wicket:message key="write">Write</wicket:message>
+                </th>
+                <th wicket:id="adminTh"/>
+              </tr>
+            </thead>
+            <tr wicket:id="rules">
+              <td>
+                <span wicket:id="roleName"/>
+              </td>
+              <td>
+                <input type="checkbox" wicket:id="read"/>
+              </td>
+              <td>
+                <input type="checkbox" wicket:id="write"/>
+              </td>
+              <td>
+                <input type="checkbox" wicket:id="admin"/>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

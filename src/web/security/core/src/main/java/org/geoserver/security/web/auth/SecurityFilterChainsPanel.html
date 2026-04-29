@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-SecurityFilterChainsPanel">
+        <div wicket:id="feedback">
+  </div>
+        <div class="gs-unordered-list-class action-group">
+          <div class="gs-list-item-class">
+            <a class="button outline-primary" wicket:id="addServiceChain">
+              <i class="gs-icon gs-icon-add"></i>
+              <wicket:message key="addServiceChain"/>
+            </a>
+          </div>
+          <div class="gs-list-item-class">
+            <a class="button outline-primary" wicket:id="addHtmlChain">
+              <i class="gs-icon gs-icon-add"></i>
+              <wicket:message key="addHtmlChain"/>
+            </a>
+          </div>
+        </div>
+        <div wicket:id="table"/>
+        <div wicket:id="dialog"/>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/">
+<!--
+  ~ (c) 2024 Open Source Geospatial Foundation - all rights reserved
+  ~ This code is licensed under the GPL 2.0 license, available at the root
+  ~ application directory.
+  ~
+  -->
+<wicket:head>
+</wicket:head>
+<body>
+<wicket:extend>
+    <div id="jwt-headers">
+        <fieldset>
+        <legend>
+            <span><wicket:message key="UsernameHeader"></wicket:message></span>
+            <a class="help-link" href="#" wicket:id="UsernameHelp"></a>
+        </legend>
+        <label>
+            <wicket:message key="userNameHeaderAttributeName"></wicket:message>
+        </label>
+        <input class="field" wicket:id="userNameHeaderAttributeName" type="text"/>
+        <br/>
+        <label>
+            <wicket:message key="formatUserName"></wicket:message>
+        </label>
+        <select class="select" id="userNameFormatSelect"
+                wicket:id="userNameFormatChoice"></select>
+        <br/>
+        <!-- visibility of this DIV is control with JS, above.
+              If formatUserName = "STRING" - don't show
+              Otherwise (JSON or JWT), then show.
+         -->
+        <div id="userNamePathDiv">
+            <label>
+                <wicket:message key="userNamePath"></wicket:message>
+            </label>
+            <input class="field" wicket:id="userNameJsonPath" type="text"/>
+        </div>
+
+        <br/>
+        <legend>
+            <span><wicket:message key="validateTokenHeader"></wicket:message></span>
+            <a class="help-link" href="#" wicket:id="validateTokenHelp"></a>
+        </legend>
+
+        <div class="flex">
+            <input class="field" id="validateToken"
+                  type="checkbox" wicket:id="validateToken"/>
+            <label id="validateTokenLabel">
+                <wicket:message key="showTokenValidation"></wicket:message>
+            </label>
+        </div>
+        <div id="validateTokenDiv" class="padLeftLarge padTopSmall">
+        <div class="padtopLarge" >
+            <div class="flex">
+                <input class="field autoTopBottom" id="validateTokenExpiry"
+                       type="checkbox" wicket:id="validateTokenExpiry"/>
+                <label class="padLeftSmall">
+                    <wicket:message key="validateTokenExpiry"></wicket:message>
+                </label>
+            </div>
+
+        </div>
+
+
+
+            <div class="flex padTopLarge">
+                <input class="field autoTopBottom" id="validateTokenSignature"
+                         type="checkbox" wicket:id="validateTokenSignature"/>
+                <label  class="padLeftSmall" >
+                    <wicket:message key="validateTokenSignatureText"></wicket:message>
+                </label>
+            </div>
+            <div id="validateTokenSignatureURLDiv" class="padLeftLarge padTopSmall">
+                <label>
+                    <wicket:message key="validateTokenSignatureURL"></wicket:message>
+                </label>
+                <input class="field" wicket:id="validateTokenSignatureURL" type="text"/>
+            </div>
+
+
+        <div  class="padTopLarge">
+            <div class="flex">
+                <input class="field autoTopBottom" id="validateTokenAgainstURL"
+                         type="checkbox" wicket:id="validateTokenAgainstURL"/>
+                <label class="padLeftSmall" >
+                    <wicket:message key="validateTokenAgainstURL"></wicket:message>
+                </label>
+            </div>
+            <div id="validateTokenAgainstURLDiv" class="flex padLeftLarge padTopSmall">
+
+                <label>
+                    <wicket:message key="validateTokenAgainstURLText"></wicket:message>
+                </label>
+                <div>
+                    <input class="field" wicket:id="validateTokenAgainstURLEndpoint" type="text"/>
+                </div>
+                <div class="flex">
+                    <input class="field autoTopBottom" id="validateSubjectWithEndpoint"
+                            type="checkbox" wicket:id="validateSubjectWithEndpoint"/>
+                    <label  class="padLeftSmall">
+                        <wicket:message key="validateTokenAgainstURLSubject"></wicket:message>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="padTopLarge">
+            <div class="flex">
+                <input class="field autoTopBottom" id="validateTokenAudience"
+                       type="checkbox" wicket:id="validateTokenAudience"/>
+                <label class="padLeftSmall">
+                    <wicket:message key="validateTokenAudience"></wicket:message>
+                </label>
+            </div>
+            <div id="validateTokenAudienceDiv" class="flex padLeftLarge padTopSmall" >
+                <label>
+                    <wicket:message key="validateTokenAudienceClaimName"></wicket:message>
+                </label>
+                <div>
+                    <input class="field" wicket:id="validateTokenAudienceClaimName" type="text"/>
+                </div>
+                <label>
+                    <wicket:message key="validateTokenAudienceClaimValue"></wicket:message>
+                </label>
+                <div>
+                    <input class="field" wicket:id="validateTokenAudienceClaimValue" type="text"/>
+                </div>
+
+            </div>
+            </div>
+        </div>
+
+
+    </fieldset>
+    </div>
+</wicket:extend>
+</body>
+</html>

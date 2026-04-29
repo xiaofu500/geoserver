@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head/>
+  <body>
+    <form name="theForm">
+      <wicket:panel>
+        <div class="gs-panel-ServiceLayerConfigurationPanel">
+          <fieldset>
+            <legend>
+              <span>
+                <wicket:message key="layerSettings">Layer Settings</wicket:message>
+              </span>
+              <a href="#" wicket:id="layerSettingsHelp" class="help-link"/>
+            </legend>
+            <div class="gs-unordered-list-class choiceList">
+              <div class="gs-list-item-class">
+                <input id="configEnabled" type="checkbox" wicket:id="configEnabled"/>
+                <label for="configEnabled">
+                  <wicket:message key="config">Selectively enable services for layer</wicket:message>
+                </label>
+              </div>
+            </div>
+            <div class="gs-unordered-list-class">
+              <div class="gs-list-item-class">
+                <div wicket:id="serviceSelectionContainer">
+                  <div wicket:id="servicesSelection"/>
+                </div>
+              </div>
+            </div>
+            <div class="gs-unordered-list-class">
+              <div class="gs-list-item-class">
+                <label id="defaultDisabledServicesLabel" wicket:id="defaultDisabledServicesLabel" for="defaultDisabledServices"/>
+                <input id="defaultDisabledServices" type="text" wicket:id="defaultDisabledServices" title="List of services disabled by default. This setting is defined by 'org.geoserver.service.disabled' application property."/>
+              </div>
+            </div>
+          </fieldset>
+          <div wicket:id="serviceDialog"/>
+        </div>
+      </wicket:panel>
+    </form>
+  </body>
+</html>

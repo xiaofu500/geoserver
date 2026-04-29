@@ -1,0 +1,20 @@
+{
+    "$schema":"https://json-schema.org/draft/2020-12/schema",
+
+    "title":"geometry array",
+    "type":"object",
+
+    "properties":{
+        "geometryType":{
+            "title":"the type of the geometry",
+             "description":"known values include: GeometryPoint, GeometryMultipoint, GeometryPolyline, GeometryPolygon, GeometryEnvelope",
+            "type":"string"},
+        "geometries":{
+            "title":"array of geometries",
+            "type":"array",
+             "items":{ "$ref" : "geometry.json" }},
+        "spatialReference":{
+            "$ref" : "spatialreference.json"}
+    },
+    "required":["geometries"]
+}

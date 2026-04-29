@@ -1,0 +1,66 @@
+---
+description: CodeBuddy 开发规范 - 整合 .codex 和 .kiro 技能规则
+alwaysApply: true
+enabled: true
+updatedAt: 2026-04-24T09:33:00.000Z
+provider: 
+---
+
+# AI 开发规范
+
+## 项目结构
+
+- `project/forest-fire-vue` - 主应用
+- `demo/html` - 静态演示和原型
+- `ForestFireCA` - C# 元胞自动机实现
+
+## 开发规则
+
+1. **最小改动原则**：保持最小化、聚焦的改动，除非任务需要改变行为，否则保持现有行为
+2. **UI 分离**：UI 渲染放在 `src/components`；可复用或业务逻辑放入 `src/composables` 或 `src/features/*/composables`
+3. **类型安全**：优先使用显式 TypeScript 类型，避免引入 `any`
+4. **导入规范**：只使用命名导入，**禁止** `import * as Xxx`
+5. **导入检查**：如修改了 `project/forest-fire-vue` 的导入，运行 `npm run check:imports`
+6. **格式保持**：保持与周围文件格式一致，不要重新格式化无关代码
+
+## 文档规范
+
+- 完成开发任务后，优先更新当天文档：
+  - 专题工作用 `docs/features/YYYYMMDD/`
+  - 其他更新或创建 `docs/summaries/开发总结-<主题>-YYYY-MM-DD.md`
+- 新文档使用**中文**
+- 包含流程、交互或状态转换的文档应包含 **Mermaid** 图
+
+## 提交规范
+
+- 使用 **Conventional Commits** 格式提交
+- 验证实现后，提交并推送（除非用户明确要求不提交）
+
+## 验证命令
+
+在 `project/forest-fire-vue` 目录运行：
+- `npm run check:imports` - 导入检查
+- `npm run typecheck` - 类型检查
+- `npm run build` - 构建
+
+## 常用路径
+
+- 策略文档：`docs/collaboration/...`
+- 架构上下文：`docs/architecture/...`
+- 最近功能文档：`docs/features/20260423/...`
+- 主入口：`project/forest-fire-vue/src/main.ts`
+- Cesium Hooks 指南：`project/forest-fire-vue/src/composables/cesiumHooks/README.md`
+
+## 技能参考
+
+### Vue 3 + Ant Design Vue
+- 使用 Vue 3 Composition API
+- ant-design-vue **v4.x**，使用 `open` 替代 `visible`
+- 日期组件使用 **dayjs**（非 moment）
+- 图标按需引入：`import { SearchOutlined } from "@ant-design/icons-vue"`
+
+### Cesium
+- 使用 `CallbackProperty` 进行动态属性更新
+- 使用 `ScreenSpaceEventHandler` 处理鼠标事件
+- Entity 定位使用 `Cartesian3.fromDegrees(lon, lat, height)`
+- 模型使用 `Transforms.headingPitchRollQuaternion` 设置朝向

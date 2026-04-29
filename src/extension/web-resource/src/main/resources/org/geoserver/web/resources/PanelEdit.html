@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-PanelEdit">
+        <div wicket:id="feedback"/>
+        <div class="gs-unordered-list-class">
+          <div class="gs-list-item-class">
+            <label>
+              <wicket:message key="resource"/>
+            </label>
+            <input wicket:id="resource" size="40" type="text"/>
+          </div>
+          <span class="gs-list-item-class" wicket:id="createDirectory">
+            <small>
+              <wicket:message key="createDirectory"/>
+            </small>
+          </span>
+          <div class="gs-list-item-class">
+            <label>
+              <wicket:message key="contents"/>
+            </label>
+            <textarea wicket:id="contents" class="w-lg h-lg"/>
+          </div>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

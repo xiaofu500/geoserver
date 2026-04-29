@@ -1,0 +1,82 @@
+/* (c) 2014 Open Source Geospatial Foundation - all rights reserved
+ * (c) 2013 OpenPlans
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.filters;
+
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
+import java.io.IOException;
+
+/**
+ * A wrapper making sure the servlet container will never see a flush call once the output stream is closed
+ *
+ * @author Andrea Aime - GeoSolutions
+ */
+class FlushSafeResponse extends HttpServletResponseWrapper implements HttpServletResponse {
+
+    ServletOutputStream os = null;
+
+    public FlushSafeResponse(HttpServletResponse response) {
+        super(response);
+    }
+
+    @Override
+    public synchronized ServletOutputStream getOutputStream() throws IOException {
+        if (os == null) {
+            os = new FlushSafeServletOutputStream(super.getOutputStream());
+        }
+        return os;
+    }
+
+    static class FlushSafeServletOutputStream extends ServletOutputStream {
+
+        ServletOutputStream delegate;
+        boolean closed = false;
+
+        public FlushSafeServletOutputStream(ServletOutputStream delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public void write(int b) throws IOException {
+            delegate.write(b);
+        }
+
+        @Override
+        public void write(byte[] b) throws IOException {
+            delegate.write(b);
+        }
+
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException {
+            delegate.write(b, off, len);
+        }
+
+        @Override
+        public void flush() throws IOException {
+            if (!closed) {
+                delegate.flush();
+            }
+        }
+
+        @Override
+        public void close() throws IOException {
+            closed = true;
+            delegate.close();
+        }
+
+        @Override
+        public boolean isReady() {
+            return delegate.isReady();
+        }
+
+        @Override
+        public void setWriteListener(WriteListener writeListener) {
+            delegate.setWriteListener(writeListener);
+        }
+    }
+}

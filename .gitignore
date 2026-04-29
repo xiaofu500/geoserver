@@ -1,0 +1,69 @@
+build-full.bat
+target
+.settings
+.classpath
+.factorypath
+.project
+.metadata
+.DS_Store
+*.class
+*.pyc
+.pmd
+# draw.io backup
+*.bkp
+
+/.metadata/
+
+# Intellij
+.idea/
+*.iml
+
+# Cucumber Testing artifacts
+cucumber-report
+.mvn
+
+# staging release artifacts
+distribution/
+settings.xml
+
+# NSG CITE testst data directory
+data/citensg-1.0/gwc/cite*
+data/citensg-1.0/gwc/geowebcache_*.bak
+data/citensg-1.0/legendsamples/
+data/citensg-1.0/logs/geoserver.log
+
+# cite tests logs directory
+build/cite/logs
+
+# https://bugs.openjdk.java.net/browse/JDK-8214300
+.attach_pid*
+
+# Windows installer related stuff
+src/release/installer/win/*.rtf
+src/release/installer/win/source/
+src/release/installer/win/target/
+
+# spotless up to date checks
+.spotless-index
+
+# Eclipse stuff
+src/web/app/.temp-Start*
+
+# VS Code
+.vscode/
+test_conversion
+
+# MkDocs build output
+mkdocs_output/
+.hypothesis*
+venv/
+
+# Maven installation
+apache-maven-*/
+
+# Build logs
+build-log*.txt
+jetty-log.txt
+
+# CodeBuddy local config
+.codebuddy/

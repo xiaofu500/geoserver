@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-RolePanel">
+        <form>
+          <fieldset>
+            <legend>
+              <div class="mb-2">
+                <wicket:message key="RolePanel.title"></wicket:message>
+              </div>
+            </legend>
+            <div wicket:id="header">
+              <div wicket:id="message"></div>
+              <div class="gs-unordered-list-class action-group">
+                <div class="gs-list-item-class">
+                  <a class="button outline-primary" href="#" wicket:id="addNew">
+                    <i class="gs-icon gs-icon-add"></i>
+                    <wicket:message key="addNew"></wicket:message>
+                  </a>
+                </div>
+                <div class="gs-list-item-class">
+                  <a class="button outline-danger" href="#" wicket:id="removeSelected">
+                    <i class="gs-icon gs-icon-delete"></i>
+                    <wicket:message key="removeSelected"></wicket:message>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div wicket:id="table"></div>
+          </fieldset>
+        </form>
+        <div wicket:id="dialog"></div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

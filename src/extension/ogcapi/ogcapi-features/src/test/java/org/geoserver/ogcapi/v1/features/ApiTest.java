@@ -1,0 +1,323 @@
+/* (c) 2018 Open Source Geospatial Foundation - all rights reserved
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.ogcapi.v1.features;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.core.util.Json;
+import io.swagger.v3.core.util.Yaml;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.PathItem;
+import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.servers.Server;
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
+import org.geoserver.ogcapi.APIFilterParser;
+import org.geoserver.ogcapi.SwaggerJSONAPIMessageConverter;
+import org.geoserver.test.GeoServerBaseTestSupport;
+import org.geoserver.wfs.WFSInfo;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.springframework.http.HttpHeaders;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.dataformat.yaml.YAMLMapper;
+
+public class ApiTest extends FeaturesTestSupport {
+
+    @Test
+    public void testApiJson() throws Exception {
+        MockHttpServletResponse response = getAsMockHttpServletResponse("ogc/features/v1/openapi", 200);
+        validateJSONAPI(response);
+    }
+
+    @Test
+    public void testApiJsonExtension() throws Exception {
+        WFSInfo wfs = getGeoServer().getService(WFSInfo.class);
+        FeatureConformance features = FeatureConformance.configuration(wfs);
+        // enable a few optional extensions
+        features.setIDs(true);
+        features.setSortBy(true);
+        features.setPropertySelection(true);
+        getGeoServer().save(wfs);
+        try {
+            MockHttpServletResponse response = getAsMockHttpServletResponse("ogc/features/v1/openapi.json", 200);
+            validateJSONAPI(response);
+        } finally {
+            // restore defaults
+            features.setIDs(null);
+            features.setSortBy(null);
+            features.setPropertySelection(null);
+            getGeoServer().save(wfs);
+        }
+    }
+
+    private void validateJSONAPI(MockHttpServletResponse response)
+            throws UnsupportedEncodingException, JacksonException, JsonProcessingException {
+        assertThat(
+                response.getContentType(),
+                CoreMatchers.startsWith(SwaggerJSONAPIMessageConverter.OPEN_API_MEDIA_TYPE_VALUE));
+        String json = response.getContentAsString();
+        LOGGER.log(Level.INFO, json);
+
+        // need to use the Swagger Jackson 2 based API until
+        // https://github.com/swagger-api/swagger-core/issues/4991 gets resolved
+        OpenAPI api = Json.mapper().readValue(json, OpenAPI.class);
+        validateApi(api);
+    }
+
+    @Test
+    public void testHTMLEncoding() throws Exception {
+        MockHttpServletResponse response = getAsMockHttpServletResponse("ogc/features/v1?f=text/html", 200);
+        assertEquals("text/html", response.getContentType());
+        String html = response.getContentAsString();
+        GeoServerBaseTestSupport.LOGGER.info(html);
+        assertThat(html, containsString("<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">"));
+    }
+
+    @Test
+    public void testApiHTML() throws Exception {
+        MockHttpServletResponse response = getAsMockHttpServletResponse("ogc/features/v1/openapi?f=text/html", 200);
+        assertEquals("text/html", response.getContentType());
+        String html = response.getContentAsString();
+        LOGGER.info(html);
+
+        // check template expansion worked properly
+        assertThat(
+                html,
+                containsString(
+                        "<link rel=\"icon\" type=\"image/png\" href=\"http://localhost:8080/geoserver/swagger-ui/favicon-32x32.png\" sizes=\"32x32\" />"));
+        assertThat(
+                html,
+                containsString(
+                        "<link rel=\"icon\" type=\"image/png\" href=\"http://localhost:8080/geoserver/swagger-ui/favicon-16x16.png\" sizes=\"16x16\" />"));
+        assertThat(
+                html,
+                containsString("<script src=\"http://localhost:8080/geoserver/swagger-ui/swagger-ui-bundle.js\">"));
+        assertThat(
+                html,
+                containsString(
+                        "<script src=\"http://localhost:8080/geoserver/swagger-ui/swagger-ui-standalone-preset.js\">"));
+        assertThat(html, containsString("<script src=\"http://localhost:8080/geoserver/webresources/ogcapi/api.js\">"));
+        assertThat(
+                html,
+                containsString(
+                        "<input type=\"hidden\" id=\"apiLocation\" value="
+                                + "\"http://localhost:8080/geoserver/ogc/features/v1/openapi?f=application%2Fvnd.oai.openapi%2Bjson%3Bversion%3D3.0\"/>"));
+        assertThat(html, not(containsString("<script>")));
+    }
+
+    @Test
+    public void testApiYaml() throws Exception {
+        WFSInfo wfs = getGeoServer().getService(WFSInfo.class);
+        FeatureConformance features = FeatureConformance.configuration(wfs);
+        features.setIDs(true); // enable
+        getGeoServer().save(wfs);
+        try {
+            String yaml = getAsString("ogc/features/v1/openapi?f=application/yaml");
+            validateYAMLApi(yaml);
+        } finally {
+            features.setIDs(null); // default
+            getGeoServer().save(wfs);
+        }
+    }
+
+    @Test
+    public void testApiYamlExtension() throws Exception {
+        WFSInfo wfs = getGeoServer().getService(WFSInfo.class);
+        FeatureConformance features = FeatureConformance.configuration(wfs);
+        features.setIDs(true); // enable
+        getGeoServer().save(wfs);
+        try {
+            String yaml = getAsString("ogc/features/v1/openapi?f=application/yaml");
+            validateYAMLApi(yaml);
+        } finally {
+            features.setIDs(null); // default
+            getGeoServer().save(wfs);
+        }
+    }
+
+    private void validateYAMLApi(String yaml) throws JacksonException, JsonProcessingException {
+        GeoServerBaseTestSupport.LOGGER.log(Level.INFO, yaml);
+
+        OpenAPI api = Yaml.mapper().readValue(yaml, OpenAPI.class);
+        validateApi(api);
+    }
+
+    @Test
+    public void testYamlAsAcceptsHeader() throws Exception {
+        WFSInfo wfs = getGeoServer().getService(WFSInfo.class);
+        FeatureConformance features = FeatureConformance.configuration(wfs);
+        features.setIDs(true); // enable
+        getGeoServer().save(wfs);
+        try {
+            MockHttpServletRequest request = createRequest("ogc/features/v1/openapi");
+            request.setMethod("GET");
+            request.setContent(new byte[] {});
+            request.addHeader(HttpHeaders.ACCEPT, "foo/bar, application/yaml, text/html");
+            MockHttpServletResponse response = dispatch(request);
+            assertEquals(200, response.getStatus());
+            assertThat(response.getContentType(), CoreMatchers.startsWith("application/yaml"));
+            String yaml = string(
+                    new ByteArrayInputStream(response.getContentAsString().getBytes()));
+
+            OpenAPI api = Yaml.mapper().readValue(yaml, OpenAPI.class);
+            validateApi(api);
+        } finally {
+            features.setIDs(null); // default
+            getGeoServer().save(wfs);
+        }
+    }
+
+    private void validateApi(OpenAPI api) {
+        // only one server
+        List<Server> servers = api.getServers();
+        assertThat(servers, hasSize(1));
+        assertThat(servers.get(0).getUrl(), equalTo("http://localhost:8080/geoserver/ogc/features/v1"));
+
+        // info version is spec version
+        assertEquals("1.0.1", api.getInfo().getVersion());
+
+        // paths
+        Paths paths = api.getPaths();
+
+        // ... landing page
+        PathItem landing = paths.get("/");
+        assertNotNull(landing);
+        assertThat(landing.getGet().getOperationId(), equalTo("getLandingPage"));
+
+        // ... conformance
+        PathItem conformance = paths.get("/conformance");
+        assertNotNull(conformance);
+        assertThat(conformance.getGet().getOperationId(), equalTo("getConformanceDeclaration"));
+
+        // ... collections
+        PathItem collections = paths.get("/collections");
+        assertNotNull(collections);
+        assertThat(collections.getGet().getOperationId(), equalTo("getCollections"));
+
+        // ... collection
+        PathItem collection = paths.get("/collections/{collectionId}");
+        assertNotNull(collection);
+        assertThat(collection.getGet().getOperationId(), equalTo("describeCollection"));
+
+        // ... features
+        PathItem items = paths.get("/collections/{collectionId}/items");
+        assertNotNull(items);
+        Operation itemsGet = items.getGet();
+        assertThat(itemsGet.getOperationId(), equalTo("getFeatures"));
+        List<Parameter> parameters = itemsGet.getParameters();
+        List<String> itemGetParamNames =
+                parameters.stream().map(p -> p.get$ref()).collect(Collectors.toList());
+        WFSInfo wfs = getGeoServer().getService(WFSInfo.class);
+        FeatureConformance features = FeatureConformance.configuration(wfs);
+        List<String> expectedItemsParams = new ArrayList<>(Arrays.asList(
+                "#/components/parameters/collectionId",
+                "#/components/parameters/limit",
+                "#/components/parameters/bbox",
+                "#/components/parameters/datetime",
+                "#/components/parameters/filter",
+                "#/components/parameters/filter-lang",
+                "#/components/parameters/filter-crs",
+                "#/components/parameters/crs",
+                "#/components/parameters/bbox-crs",
+                "#/components/parameters/otherParameters"));
+        if (features.sortBy(wfs)) expectedItemsParams.add("#/components/parameters/sortby");
+        if (features.ids(wfs)) expectedItemsParams.add("#/components/parameters/ids");
+        if (features.propertySelection(wfs)) {
+            expectedItemsParams.add("#/components/parameters/properties");
+            expectedItemsParams.add("#/components/parameters/exclude-properties");
+        }
+
+        assertThat(itemGetParamNames, containsInAnyOrder(expectedItemsParams.toArray(String[]::new)));
+
+        // filter languages
+        Parameter langs = api.getComponents().getParameters().get("filter-lang");
+        assertEquals(
+                Arrays.asList(APIFilterParser.ECQL_TEXT, APIFilterParser.CQL2_TEXT, APIFilterParser.CQL2_JSON),
+                langs.getSchema().getEnum());
+
+        // ... feature
+        PathItem item = paths.get("/collections/{collectionId}/items/{featureId}");
+        assertNotNull(item);
+        assertThat(item.getGet().getOperationId(), equalTo("getFeature"));
+
+        // check collectionId parameter
+        Map<String, Parameter> params = api.getComponents().getParameters();
+        Parameter collectionId = params.get("collectionId");
+        @SuppressWarnings("unchecked")
+        List<String> collectionIdValues = collectionId.getSchema().getEnum();
+        List<String> expectedCollectionIds = getCatalog().getFeatureTypes().stream()
+                .map(ft -> ft.prefixedName())
+                .collect(Collectors.toList());
+        assertThat(collectionIdValues, equalTo(expectedCollectionIds));
+
+        // check the limit parameter
+        Parameter limit = params.get("limit");
+        Schema limitSchema = limit.getSchema();
+        Assert.assertEquals(BigDecimal.valueOf(1), limitSchema.getMinimum());
+        Assert.assertEquals(wfs.getMaxFeatures(), limitSchema.getMaximum().intValue());
+        assertEquals(wfs.getMaxFeatures(), ((Number) limitSchema.getDefault()).intValue());
+    }
+
+    @Test
+    public void testWorkspaceQualifiedAPI() throws Exception {
+        MockHttpServletRequest request = createRequest("cdf/ogc/features/v1/openapi");
+        request.setMethod("GET");
+        request.setContent(new byte[] {});
+        request.addHeader(HttpHeaders.ACCEPT, "foo/bar, application/yaml, text/html");
+        MockHttpServletResponse response = dispatch(request);
+        assertEquals(200, response.getStatus());
+        assertEquals("application/yaml", response.getContentType());
+        String yaml =
+                string(new ByteArrayInputStream(response.getContentAsString().getBytes()));
+
+        // System.out.println(yaml);
+
+        ObjectMapper mapper = new YAMLMapper();
+        OpenAPI api = mapper.readValue(yaml, OpenAPI.class);
+        Map<String, Parameter> params = api.getComponents().getParameters();
+        Parameter collectionId = params.get("collectionId");
+        @SuppressWarnings("unchecked")
+        List<String> collectionIdValues = collectionId.getSchema().getEnum();
+        List<String> expectedCollectionIds =
+                getCatalog().getFeatureTypesByNamespace(getCatalog().getNamespaceByPrefix("cdf")).stream()
+                        .map(ft -> ft.getName())
+                        .collect(Collectors.toList());
+        assertThat(collectionIdValues, equalTo(expectedCollectionIds));
+    }
+
+    @Test
+    @Ignore
+    public void testFilterCRS() throws Exception {
+        fail("We should to enumerate all supported filter-crs values, but they are likely too many, "
+                + "and we'd have to inspect all the collections to find an exhaustive list for the "
+                + "test. The ATS does not seem to check it either, so taking a not but not "
+                + "implementing for the time being.");
+    }
+}

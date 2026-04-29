@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:wicket="http://wicket.apache.org/">
+<body>
+<wicket:extend>
+  <form wicket:id="form">
+
+    <fieldset>
+      <div class="gs-form">
+        <div class="gs-form-group">
+          <label for="username">
+            <wicket:message key="username">username</wicket:message>
+          </label>
+          <input type="text" wicket:id="username" id="username"/>
+        </div>
+        <div class="choiceItem">
+          <input type="checkbox" wicket:id="enabled" id="enabled"/>
+          <label for="enabled">
+            <wicket:message key="enabled">enabled</wicket:message>
+          </label>
+        </div>
+        <div class="gs-form-group">
+          <label for="password">
+            <wicket:message key="password">password</wicket:message>
+          </label>
+          <input type="password" wicket:id="password" id="password"/>
+        </div>
+        <div class="gs-form-group">
+          <label for="confirmPassword">
+            <wicket:message key="confirmPassword">confirmPassword</wicket:message>
+          </label>
+          <input type="password" wicket:id="confirmPassword" id="confirmPassword"/>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>
+        <span><wicket:message key="properties"></wicket:message></span>
+      </legend>
+      <div wicket:id="properties" id="properties"/>
+    </fieldset>
+
+    <fieldset>
+      <legend>
+        <span><wicket:message key="groups"></wicket:message></span>
+      </legend>
+      <div wicket:id="groups"/>
+
+    </fieldset>
+    <div wicket:id="roles"/>
+    <fieldset>
+      <div class="gs-form">
+        <div class="gs-form-group">
+          <label>
+            <wicket:message key="adminGroups"></wicket:message>
+          </label>
+          <select class="select choicesSelect w-md" wicket:id="adminGroups" multiple="multiple"></select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>
+        <span><wicket:message key="calculatedRoles"></wicket:message></span>
+      </legend>
+      <div class="gs-unordered-list-class" wicket:id="calculatedRolesContainer">
+        <div class="gs-list-item-class" wicket:id="calculatedRoles">
+          <span wicket:id="role"></span>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="button-group toolbar-sticky selfclear">
+      <a href="#" class="form-button-save button primary" wicket:id="save"><wicket:message key="save">Save</wicket:message></a>
+      <a href="#" class="form-button-cancel button outline-danger" wicket:id="cancel"><wicket:message key="cancel">Cancel</wicket:message></a>
+    </div>
+  </form>
+</wicket:extend>
+</body>
+</html>

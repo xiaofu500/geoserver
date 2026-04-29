@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:wicket="http://wicket.apache.org/">
+<wicket:head>
+</wicket:head>
+<body>
+<wicket:extend>
+  <form id="form" wicket:id="form">
+
+    <fieldset class="border-0">
+      <div class="gs-form-group">
+        <label for="activeRoleService">
+          <wicket:message key="activeRoleService"></wicket:message>
+        </label>
+        <select class="w-md" wicket:id="roleServiceName"></select>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>
+        <span><wicket:message key="encryption"></wicket:message></span>
+        <a href="#" wicket:id="encryptionHelp" class="help-link"></a>
+      </legend>
+      <div id="encryption" wicket:id="encryption">
+      </div>
+    </fieldset>
+
+    <div class="button-group toolbar-sticky selfclear">
+      <a href="#" class="form-button-save button primary" wicket:id="save">
+        <wicket:message key="save">Save</wicket:message>
+      </a>
+      <a href="#" class="form-button-cancel button outline-danger" wicket:id="cancel">
+        <wicket:message key="cancel">Cancel</wicket:message>
+      </a>
+    </div>
+  </form>
+</wicket:extend>
+</body>
+</html>

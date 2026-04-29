@@ -1,0 +1,59 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+<wicket:head>
+  <wicket:link>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+  </wicket:link>
+ </wicket:head>
+</head>
+<body>
+<wicket:extend>
+   <h1><wicket:message key="execution"></wicket:message>: <span wicket:id="clazz"></span> (<span wicket:id="id"></span>)</h1>
+
+   <div wicket:id="header">
+   </div>
+
+   <div class="gs-unordered-list-class plain pt-5">
+    <div class="gs-list-item-class">
+      <fieldset>
+       <legend>
+           <span class="border-0" wicket:id="icon"></span>
+           <span class="border-0 text-nowrap header-title" wicket:id="title"></span>
+       </legend>
+     </fieldset>
+
+    </div>
+    <div class="gs-list-item-class">
+       <div class="button-group selfclear pt-3">
+         <a href="" wicket:id="pause">
+           <span><wicket:message key="pause"></wicket:message></span>
+         </a>
+         <a href="" wicket:id="resume">
+           <span><wicket:message key="resume"></wicket:message></span>
+         </a>
+         <a href="" wicket:id="cancel">
+           <span><wicket:message key="abandon"></wicket:message></span>
+         </a>
+       </div>
+     </div>
+   </div>
+   
+   <div class="w-wide">
+       <form wicket:id="form" class="clearfix">
+         <div class="float-start"><wicket:message key="maxLines">details level</wicket:message>&#160;<input type="number" wicket:id="expand"/></div>
+         <div class="float-end"><a href="#" wicket:id="refresh"><wicket:message key="refresh">refresh</wicket:message></a></div>
+       </form>
+       <div><textarea readonly="readonly" class="detailstext" wicket:id="details"></textarea></div>
+       <a href="#" wicket:id="download"><wicket:message key="download">download backup archive</wicket:message></a>
+    </div>
+    
+    <div class="button-group selfclear pt-3">
+      <a href="" wicket:id="done">
+        <span><wicket:message key="done"></wicket:message></span>
+      </a>
+    </div>
+
+   <div wicket:id="dialog"></div>
+</wicket:extend>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+    "$schema":"https://json-schema.org/draft/2020-12/schema",
+
+
+    "title":"point",
+    "type":"object",
+    "extends":{
+        "$ref":"geometry.json"
+    },
+    "properties":{
+        "x":{
+            "title":"x",
+            "type":"number"},
+        "y":{
+            "title":"y",
+            "type":"number"},
+        "spatialReference":{
+            "$ref" : "spatialreference.json"}
+    },
+    "required":["x","y"]
+}

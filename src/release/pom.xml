@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Copyright (C) 2014 - Open Source Geospatial Foundation. All rights reserved.
+ This code is licensed under the GPL 2.0 license, available at the root
+ application directory.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.geoserver</groupId>
+    <artifactId>geoserver</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+  </parent>
+  <groupId>org.geoserver</groupId>
+  <artifactId>gs-release</artifactId>
+  <packaging>jar</packaging>
+  <name>GeoServer Release Module</name>
+  <properties>
+    <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
+    <copyright.year>${maven.build.timestamp}</copyright.year>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-util</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.ee11</groupId>
+      <artifactId>jetty-ee11-servlets</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.ee11</groupId>
+      <artifactId>jetty-ee11-webapp</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-security</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-deploy</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-start</artifactId>
+      <version>${jetty.version}</version>
+      <classifier>shaded</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.toolchain</groupId>
+      <artifactId>jetty-schemas</artifactId>
+      <version>3.1.M0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-slf4j-impl</artifactId>
+      <version>${jetty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-el</groupId>
+      <artifactId>commons-el</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ant</groupId>
+      <artifactId>ant</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+    <!-- slf4j binding to reload4j; shipped in bin.zip's lib/logging/ for the standalone Jetty. -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-reload4j</artifactId>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/target/html-template</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/markdown/html</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <!--
+             Filter start.ini to include the correct slf4j version
+             Works in 3 steps:
+             0) copy-dependencies (during compile phase)
+             1) extract the slf4j version from the dependency jar name (during validate phase)
+             2) filter start.ini (during install phase)
+          -->
+          <execution>
+            <id>filter-start-ini</id>
+            <phase>install</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/jetty</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>jetty</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>start.ini</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>extract-slf4j-version-from-jarname</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <exportAntProperties>true</exportAntProperties>
+              <target name="extract-slf4j-version">
+
+                <!-- Find all slf4j-api-*.jar in target/dependency -->
+                <pathconvert pathsep="," property="slf4j.matches">
+                  <fileset dir="${project.build.directory}/dependency">
+                    <include name="slf4j-api-*.jar"></include>
+                  </fileset>
+                </pathconvert>
+
+                <!-- Fail fast if none found -->
+                <fail message="No slf4j-api-*.jar found under ${project.build.directory}/dependency">
+                  <condition>
+                    <equals arg1="${slf4j.matches}" arg2=""></equals>
+                  </condition>
+                </fail>
+
+                <!-- Fail if multiple (avoid ambiguity) -->
+                <fail message="Multiple slf4j-api jars found: ${slf4j.matches}. Keep only one.">
+                  <condition>
+                    <contains string="${slf4j.matches}" substring=","></contains>
+                  </condition>
+                </fail>
+
+                <!-- Extract the version from the single match -->
+                <pathconvert property="slf4j.version">
+                  <path>
+                    <pathelement location="${slf4j.matches}"></pathelement>
+                  </path>
+                  <mapper from="^.*[/\\]slf4j-api-(.*)\.jar$" to="\1" type="regexp"></mapper>
+                </pathconvert>
+
+                <echo>Using SLF4J version: ${slf4j.version}</echo>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.ruleoftech</groupId>
+        <artifactId>markdown-page-generator-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>licenses</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputDirectory>${project.basedir}/../../licenses</inputDirectory>
+              <outputDirectory>${project.build.directory}/html/licenses</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>readme</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputDirectory>${project.basedir}/src/markdown</inputDirectory>
+              <outputDirectory>${project.build.directory}/html/release</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>extensions</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <!-- Renders the shared README.md / LICENSE*.md at src/release/extensions/ root.
+                   Per-extension docs are now rendered locally by each module's assembly profile;
+                   recursion would re-render any stray file accidentally left behind. -->
+              <inputDirectory>${project.basedir}/extensions</inputDirectory>
+              <outputDirectory>${project.build.directory}/html/extensions</outputDirectory>
+              <recursiveInput>false</recursiveInput>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <recursiveInput>false</recursiveInput>
+          <transformRelativeMarkdownLinks>true</transformRelativeMarkdownLinks>
+          <headerHtmlFile>${project.basedir}/target/html-template/header.html</headerHtmlFile>
+          <footerHtmlFile>${project.basedir}/target/html-template/footer.html</footerHtmlFile>
+          <pegdownExtensions>TABLES,FENCED_CODE_BLOCKS,AUTOLINKS,FORCELISTITEMPARA</pegdownExtensions>
+          <defaultTitle>true</defaultTitle>
+          <inputFileExtensions>md,txt</inputFileExtensions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>remove-dependencies</id>
+            <phase>install</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <!-- remove some unwanted dependencies that get pulled over -->
+              <target>
+                <delete>
+                  <fileset dir="${project.build.directory}/dependency" includes="servlet-api-*.jar,core*.jar"></fileset>
+                </delete>
+              </target>
+            </configuration>
+          </execution>
+          <execution>
+            <id>extract-slf4j-version-from-jarname</id>
+            <phase>test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <exportAntProperties>true</exportAntProperties>
+              <target name="extract-slf4j-version">
+
+                <!-- Find all slf4j-api-*.jar in target/dependency -->
+                <pathconvert pathsep="," property="slf4j.matches">
+                  <fileset dir="${project.build.directory}/dependency">
+                    <include name="slf4j-api-*.jar"></include>
+                  </fileset>
+                </pathconvert>
+
+                <!-- Fail fast if none found -->
+                <fail message="No slf4j-api-*.jar found under ${project.build.directory}/dependency">
+                  <condition>
+                    <equals arg1="${slf4j.matches}" arg2=""></equals>
+                  </condition>
+                </fail>
+
+                <!-- Fail if multiple (avoid ambiguity) -->
+                <fail message="Multiple slf4j-api jars found: ${slf4j.matches}. Keep only one.">
+                  <condition>
+                    <contains string="${slf4j.matches}" substring=","></contains>
+                  </condition>
+                </fail>
+
+                <!-- Extract the version from the single match -->
+                <pathconvert property="slf4j.version">
+                  <path>
+                    <pathelement location="${slf4j.matches}"></pathelement>
+                  </path>
+                  <mapper from="^.*[/\\]slf4j-api-(.*)\.jar$" to="\1" type="regexp"></mapper>
+                </pathconvert>
+
+                <echo>Using SLF4J version: ${slf4j.version}</echo>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

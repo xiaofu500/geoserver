@@ -1,0 +1,61 @@
+/* (c) 2020 Open Source Geospatial Foundation - all rights reserved
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.web.data.store.dggs;
+
+import static org.geoserver.web.util.WebUtils.IsWicketCssFileEmpty;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
+import org.geoserver.web.data.store.StoreEditPanel;
+import org.geoserver.web.data.store.panel.DropDownChoiceParamPanel;
+import org.geoserver.web.util.MapModel;
+import org.geoserver.web.wicket.ParamResourceModel;
+import org.geotools.dggs.DGGSFactoryFinder;
+import org.geotools.dggs.gstore.DGGSGeometryStoreFactory;
+
+/**
+ * Provides the form components for the shapefile datastore
+ *
+ * @author Andrea Aime - GeoSolution
+ */
+public class DGGSGeometryStoreEditPanel extends StoreEditPanel {
+
+    private static final boolean isCssEmpty = IsWicketCssFileEmpty(DGGSGeometryStoreEditPanel.class);
+
+    @Override
+    public void renderHead(org.apache.wicket.markup.head.IHeaderResponse response) {
+        super.renderHead(response);
+        // if the panel-specific CSS file contains actual css then have the browser load the css
+        if (!isCssEmpty) {
+            response.render(org.apache.wicket.markup.head.CssHeaderItem.forReference(
+                    new org.apache.wicket.request.resource.PackageResourceReference(
+                            getClass(), getClass().getSimpleName() + ".css")));
+        }
+    }
+
+    public DGGSGeometryStoreEditPanel(final String componentId, final Form storeEditForm) {
+        super(componentId, storeEditForm);
+
+        final IModel model = storeEditForm.getModel();
+        setDefaultModel(model);
+
+        final IModel<Map<String, ?>> paramsModel = new PropertyModel<>(model, "connectionParameters");
+
+        IModel<Serializable> valueModel = new MapModel<>(paramsModel, DGGSGeometryStoreFactory.DGGS_FACTORY_ID.key);
+        IModel<String> labelModel = new ParamResourceModel("DGGSFactoryId", this);
+        DropDownChoiceParamPanel parameterPanel =
+                new DropDownChoiceParamPanel("factoryId", valueModel, labelModel, getDGGSFactoryIds(), true);
+        add(parameterPanel);
+    }
+
+    private List<String> getDGGSFactoryIds() {
+        return DGGSFactoryFinder.getFactoryIdentifiers().collect(Collectors.toList());
+    }
+}

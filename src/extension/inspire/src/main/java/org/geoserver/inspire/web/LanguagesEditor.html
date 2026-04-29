@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-LanguagesEditor">
+        <div class="gs-form">
+          <div class="gs-input-group">
+            <select id="languages" class="select w-md" wicket:id="languages" multiple="multiple"/>
+            <button wicket:id="removeLanguages" type="submit">
+              <wicket:message key="removeSelected">Remove selected</wicket:message>
+            </button>
+          </div>
+          <div class="gs-input-group">
+            <select id="selectLanguage" type="text" wicket:id="selectLanguage" class="w-md"/>
+            <button wicket:id="addLanguage" type="submit">
+              <wicket:message key="addLanguage">Add</wicket:message>
+            </button>
+          </div>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

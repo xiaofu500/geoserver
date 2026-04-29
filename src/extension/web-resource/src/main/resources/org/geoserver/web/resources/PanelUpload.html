@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-PanelUpload">
+        <h3>
+          <wicket:message key="titleUpload"/>
+        </h3>
+        <div wicket:id="feedback"/>
+        <form enctype="multipart/form-data" method="post">
+          <div class="gs-unordered-list-class">
+            <div class="gs-list-item-class">
+              <label>
+                <wicket:message key="directory"/>
+              </label>
+              <input wicket:id="directory" size="40" type="text"/>
+              <br/>
+              <small>
+                <wicket:message key="createDirectory"/>
+              </small>
+            </div>
+            <div class="gs-list-item-class">
+              <label>
+                <wicket:message key="fileLocal"/>
+              </label>
+              <input wicket:id="file" size="40" type="file"/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

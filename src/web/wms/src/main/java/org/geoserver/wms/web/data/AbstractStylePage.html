@@ -1,0 +1,19 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<body>
+<wicket:extend>
+    <div wicket:id="dialog"></div>
+    <div id="fullscreen-div" class="expand"><a href="#" id="fullscreen-link"><img id="fullscreen-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="fullscreen-image-out" alt="Fullscreen"/></a></div>
+    <form wicket:id="styleForm" id="styleForm">
+        <div wicket:id="context" class="mb-1"> </div>
+        <div class="field" wicket:id="styleEditor"> </div>
+        <div wicket:id="popup"></div>
+    </form>
+    <div class="button-group toolbar-sticky selfclear style-button-group">
+       <a href="#" class="form-button-validate button primary" wicket:id="validate"><wicket:message key="validate">Validate</wicket:message></a>
+       <a href="#" class="form-button-save button primary" wicket:id="save"><wicket:message key="save">Save</wicket:message></a>
+       <a href="#" class="form-button-apply button outline-primary" wicket:id="apply"><wicket:message key="apply">Apply</wicket:message></a>
+       <a href="#" class="form-button-cancel button outline-danger" wicket:id="cancel"><wicket:message key="cancel">Cancel</wicket:message></a>
+    </div>
+</wicket:extend>
+</body>
+</html>

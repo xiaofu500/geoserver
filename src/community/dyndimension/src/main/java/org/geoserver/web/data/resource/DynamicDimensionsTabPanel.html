@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head/>
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-DynamicDimensionsTabPanel">
+        <div class="gs-unordered-list-class">
+          <!-- TIME -->
+          <div class="gs-list-item-class">
+            <fieldset>
+              <legend>
+                <span>
+                  <wicket:message key="defaultConfigs">defaultConfigs</wicket:message>
+                </span>
+              </legend>
+              <p>
+                <wicket:message key="DynamicDimensionsTabPanel.description">description</wicket:message>
+              </p>
+              <div wicket:id="editor"/>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </wicket:panel>
+    <wicket:fragment wicket:id="policyChoice">
+      <select wicket:id="choice"/>
+    </wicket:fragment>
+    <wicket:fragment wicket:id="ecqlEditor">
+      <textarea rows="1" wicket:id="editor"/>
+    </wicket:fragment>
+  </body>
+</html>

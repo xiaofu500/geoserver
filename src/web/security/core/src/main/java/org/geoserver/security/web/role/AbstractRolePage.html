@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/">
+<body>
+<wicket:extend>
+  <form wicket:id="form">
+
+    <fieldset>
+      <legend>
+        <span wicket:id="description"></span>
+      </legend>
+      <div class="gs-form">
+        <div class="gs-form-group">
+          <label for="name">
+            <wicket:message key="name"></wicket:message>
+          </label>
+          <input type="text" wicket:id="name" id="name" class="field"/>
+        </div>
+        <div class="gs-form-group">
+          <label for="parent">
+            <wicket:message key="parent"></wicket:message>
+          </label>
+          <select wicket:id="parent" id="parent" class="w-md"/>
+        </div>
+      </div>
+
+
+    </fieldset>
+
+    <fieldset>
+      <legend>
+        <span><wicket:message key="properties"></wicket:message></span>
+      </legend>
+      <div wicket:id="properties"/>
+    </fieldset>
+
+    <div class="button-group toolbar-sticky selfclear">
+      <a href="#" class="form-button-save button primary" wicket:id="save">
+        <wicket:message key="save">Save</wicket:message>
+      </a>
+      <a href="#" class="form-button-cancel button outline-danger" wicket:id="cancel">
+        <wicket:message key="cancel">Cancel</wicket:message>
+      </a>
+    </div>
+  </form>
+</wicket:extend>
+</body>
+</html>

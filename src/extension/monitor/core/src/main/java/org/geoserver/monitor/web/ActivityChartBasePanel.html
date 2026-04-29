@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head>
+    <title>
+      <wicket:message key="title">Activity</wicket:message>
+    </title>
+  </head>
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-ActivityChartBasePanel">
+        <form wicket:id="form" class="gs-form">
+          <div class="gs-form-group">
+            <label for="from">From</label>
+            <input type="text" wicket:id="from" id="start" class="w-md" />
+          </div>
+          <div class="gs-form-group">
+            <label for="to">To</label>
+            <input type="text" wicket:id="to" id="end" class="w-md" />
+          </div>
+          <div class="button-group">
+            <a href="#" wicket:id="refresh" class="button">Refresh</a>
+          </div>
+        </form>
+        <img wicket:id="chart"/>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

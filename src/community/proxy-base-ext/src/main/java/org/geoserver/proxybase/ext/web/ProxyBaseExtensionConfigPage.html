@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+<body>
+<wicket:extend>
+    <wicket:fragment wicket:id="header">
+        <div class="action-group">
+            <a class="button outline-primary" href="#" wicket:id="addNew">
+                <i class="gs-icon gs-icon-add"></i> <wicket:message key="addNew"/>
+            </a>
+            <a class="button outline-danger" href="#" wicket:id="removeSelected">
+                <i class="gs-icon gs-icon-delete"></i><wicket:message key="removeSelected"/>
+            </a>
+        </div>
+    </wicket:fragment>
+    <div wicket:id="rulesPanel"></div>
+    <form wicket:id="form">
+        <fieldset>
+            <legend><span><wicket:message key="testRules"></wicket:message></span></legend>
+            <div class="gs-form">
+                <div class="gs-form-group">
+                    <label for="input"><wicket:message key="input"></wicket:message>
+                    </label>
+                    <textarea wicket:id="input" id="input" ></textarea>
+                </div>
+                <div class="gs-form-group">
+                    <label for="headers"><wicket:message key="headers"></wicket:message>
+                    </label>
+                    <textarea wicket:id="headers" id="input"></textarea>
+                </div>
+                <div class="gs-form-group">
+                    <label for="output"><wicket:message key="output"></wicket:message>
+                    </label>
+                    <textarea wicket:id="output" id="output"></textarea>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="button-group">
+            <a class="button" href="#" wicket:id="test"><wicket:message key="test"></wicket:message></a>
+        </div>
+    </form>
+</wicket:extend>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head>
+    <title>
+      <wicket:message key="title">Template Preview</wicket:message>
+    </title>
+  </head>
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-TemplatePreviewPanel">
+        <form name="previewForm" wicket:id="previewForm" id="previewForm">
+          <div>
+            <fieldset>
+              <div class="gs-form">
+                <div class="gs-form-group">
+                  <label for="outputFormats">
+                    <wicket:message key="outputFormats"/>
+                  </label>
+                  <select wicket:id="outputFormats" id="outputFormats" class="w-md"/>
+                </div>
+                <div class="gs-form-group">
+                  <label for="workspaces">
+                    <wicket:message key="workspaces"/>
+                  </label>
+                  <select wicket:id="workspaces" id="workspaces" class="w-md"/>
+                </div>
+                <div class="gs-form-group">
+                  <label for="featureTypes">
+                    <wicket:message key="featureTypes"/>
+                  </label>
+                  <select wicket:id="featureTypes" id="featureTypes" class="w-md"/>
+                </div>
+                <div class="gs-form-group">
+                  <label for="featureId">
+                    <wicket:message key="featureId"/>
+                  </label>
+                  <input type="text" wicket:id="featureId" id="featureId"/>
+                </div>
+                <div class="gs-form-group">
+                  <label for="cqlFilterField">
+                    <wicket:message key="cqlFilterField"/>
+                  </label>
+                  <input type="text" wicket:id="cqlFilterField" id="cqlFilterField"/>
+                </div>
+                <div class="gs-list-item-class">
+                  <label for="previewArea">
+                    <wicket:message key="previewArea"/>
+                  </label>
+                  <div class="field" wicket:id="previewArea" id="previewArea"/>
+                  <div wicket:id="validateFeedback"/>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="button-group toolbar-sticky selfclear">
+            <a href="#" class="form-button-save button primary" wicket:id="preview" id="preview">
+              <wicket:message key="preview">Preview</wicket:message>
+            </a>
+            <a href="#" class="form-button-save button primary" wicket:id="validate" id="validate">
+              <wicket:message key="validate">Validate</wicket:message>
+            </a>
+          </div>
+        </form>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

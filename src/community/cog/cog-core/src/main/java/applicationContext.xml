@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2020 - Open Source Geospatial Foundation. All rights reserved.
+ This code is licensed under the GPL 2.0 license, available at the root
+ application directory.
+-->
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <bean id="coverageReaderInputObjectCogConverter" class="org.geoserver.cog.CoverageReaderCogInputObjectConverter" />
+
+    <bean id="COGGeoTIFFExclusionFilter" class="org.geoserver.platform.NameExclusionFilter">
+        <property name="beanId" value="geotiffStorePanel" />
+    </bean>
+    <bean id="CogGeotiffStorePanel" class="org.geoserver.web.data.resource.DataStorePanelInfo">
+        <property name="id" value="geotiffRaster" />
+        <property name="factoryClass" value="org.geotools.gce.geotiff.GeoTiffFormat" />
+        <property name="icon" value="gs-icon-page-white-raster" />
+        <property name="componentClass" value="org.geoserver.web.data.store.cog.panel.CogRasterEditPanel" />
+    </bean>
+    <bean id="CogSettingsPanel" class="org.geoserver.web.data.settings.SettingsPluginPanelInfo">
+        <description>This bean adds the necessary form fields for COG Settings</description>
+        <property name="id" value="cogSettingsPanel"/>
+        <property name="titleKey" value="CogSettings"/>
+        <property name="componentClass" value="org.geoserver.web.data.store.cog.panel.CogSettingsPluginPanel"/>
+        <property name="priority" value="100"/>
+    </bean>
+    <bean id="ImageIOExtCachesCleaner" class="org.geoserver.jai.ImageIOExtCachesCleaner" />
+    <bean id="cogSettingsInitializer" class="org.geoserver.cog.CogSettingsInitializer" />
+    <bean id="cogSettingsXStreamInitializer" class="org.geoserver.cog.CogSettingsXStreamInitializer" />
+    <bean id="cogEncryptedFieldsProvider" class=" org.geoserver.cog.CogEncryptedFieldsProvider" />
+
+    <bean id="cogCoreExtension" class="org.geoserver.platform.ModuleStatusImpl">
+        <constructor-arg index="0" value="gs-cog-core"/>
+        <constructor-arg index="1" value="COG Core Extension"/>
+        <property name="message" value="Core COG support for Cloud Optimized GeoTIFFs and ImageMosaics.
+Requires an additional storage module (e.g., gs-cog-s3, gs-cog-azure, gs-cog-google)."/>
+        <property name="category" value="COMMUNITY"/>
+    </bean>
+</beans>

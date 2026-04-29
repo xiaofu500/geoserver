@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head>
+    <title>
+      <wicket:message key="title">Schema data panel</wicket:message>
+    </title>
+  </head>
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-SchemaInfoDataPanel">
+        <div class="clearfix pt-4">
+          <fieldset class="float-start features-templating-info-fieldset">
+            <legend>
+              <span>
+                <wicket:message key="schemaInfoData">Schema Info</wicket:message>
+              </span>
+            </legend>
+            <div class="gs-form">
+              <div class="gs-form-group">
+                <label for="schemaName">
+                  <wicket:message key="schemaName"/>
+                </label>
+                <input id="schemaName" wicket:id="schemaName" type="text"/>
+              </div>
+              <div class="gs-form-group">
+                <label for="extension">
+                  <wicket:message key="extension"/>
+                </label>
+                <select wicket:id="extension" id="extension" class="w-md"/>
+              </div>
+              <div class="gs-form-group">
+                <label for="workspace">
+                  <wicket:message key="workspace"/>
+                </label>
+                <select wicket:id="workspace" id="workspace" class="w-md"/>
+              </div>
+              <div class="gs-form-group">
+                <label for="featureTypeInfo">
+                  <wicket:message key="featureTypeInfo"/>
+                </label>
+                <select wicket:id="featureTypeInfo" id="featureTypeInfo" class="w-md"/>
+              </div>
+              <div class="gs-form">
+                <div class="gs-form-group">
+                  <label for="filename">
+                    <wicket:message key="schemaFile">Schema file</wicket:message>
+                  </label>
+                  <div class="gs-input-group">
+                    <input type="file" id="filename" wicket:id="filename"/>
+                    <a class="button" href="#" wicket:id="upload">
+                      <wicket:message key="upload">Upload</wicket:message>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

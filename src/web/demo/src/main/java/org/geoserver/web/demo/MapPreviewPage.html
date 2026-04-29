@@ -1,0 +1,39 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head>
+<title><wicket:message key="page.title">Layer Preview</wicket:message></title>
+</head>
+<body>
+<wicket:extend>
+  <!-- the table component -->
+  <div wicket:id="table"></div>
+  
+  <!-- The fragment for the icon -->
+  <wicket:fragment wicket:id="iconFragment">
+    <img wicket:id="layerIcon"/>
+  </wicket:fragment>
+  
+  <!-- The fragment for the common links -->
+  <wicket:fragment wicket:id="commonLinks">
+    <span class="text-nowrap" wicket:id="commonFormat">
+      <a target="_blank" href="#" wicket:id="theLink">theTitle</a>&#160;
+    </span>
+  </wicket:fragment>
+  
+  <!--  The custom drop down with optgroups -->
+  <wicket:fragment wicket:id="menuFragment" class="menu-page-select">
+    <!-- map-preview-page-menu-select class is required for CSP-JS integration - see renderHeader-->
+    <select wicket:id="menu"  class="map-preview-page-menu-select">
+      <option><wicket:message key="selectOne">Select one</wicket:message></option>
+      <optgroup label="WMS" wicket:id="wms">
+          <option wicket:id="wmsFormats"></option>
+      </optgroup>
+      <optgroup label="WFS" wicket:id="wfs">
+           <option wicket:id="wfsFormats"></option>
+       </optgroup>
+    </select>
+  </wicket:fragment>
+
+  <input type="hidden" id="maxFeatures" wicket:id="maxFeatures" />
+</wicket:extend>
+</body>
+</html>

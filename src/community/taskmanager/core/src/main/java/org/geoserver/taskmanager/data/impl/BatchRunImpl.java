@@ -1,0 +1,120 @@
+/* (c) 2017 Open Source Geospatial Foundation - all rights reserved
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.taskmanager.data.impl;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.geoserver.taskmanager.data.Batch;
+import org.geoserver.taskmanager.data.BatchRun;
+import org.geoserver.taskmanager.data.Run;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+@Entity
+@Table(
+        indexes = {
+            @Index(name = "schedulerReferenceIndex", columnList = "schedulerReference"),
+            @Index(name = "idx_batchrunimpl_batch", columnList = "batch", unique = false)
+        })
+public class BatchRunImpl extends BaseImpl implements BatchRun {
+
+    @Serial
+    private static final long serialVersionUID = 2468505054020768482L;
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "batch")
+    private BatchImpl batch;
+
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = RunImpl.class, mappedBy = "batchRun", cascade = CascadeType.ALL)
+    @OrderBy("start")
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Run> runs = new ArrayList<Run>();
+
+    @Column(nullable = false)
+    private Boolean interruptMe = false;
+
+    @Column
+    private String schedulerReference;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public BatchImpl getBatch() {
+        return batch;
+    }
+
+    @Override
+    public void setBatch(Batch batch) {
+        this.batch = (BatchImpl) batch;
+    }
+
+    @Override
+    public List<Run> getRuns() {
+        return runs;
+    }
+
+    @Override
+    public Date getStart() {
+        return BatchRun.super.getStart();
+    }
+
+    @Override
+    public Date getEnd() {
+        return BatchRun.super.getEnd();
+    }
+
+    @Override
+    public Run.Status getStatus() {
+        return BatchRun.super.getStatus();
+    }
+
+    @Override
+    public String getMessage() {
+        return BatchRun.super.getMessage();
+    }
+
+    @Override
+    public boolean isInterruptMe() {
+        return interruptMe;
+    }
+
+    @Override
+    public void setInterruptMe(boolean interruptMe) {
+        this.interruptMe = interruptMe;
+    }
+
+    @Override
+    public String getSchedulerReference() {
+        return schedulerReference;
+    }
+
+    @Override
+    public void setSchedulerReference(String qReference) {
+        this.schedulerReference = qReference;
+    }
+}

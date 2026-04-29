@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:wicket="http://wicket.apache.org/">
+<wicket:head>
+</wicket:head>
+<body>
+<wicket:extend>
+  <form id="form" wicket:id="form">
+
+    <fieldset>
+      <legend>
+        <span><wicket:message key="chainConfig"></wicket:message></span>
+        <a href="#" wicket:id="chainConfigHelp" class="help-link"></a>
+      </legend>
+
+      <div class="gs-form">
+        <div class="gs-form-group">
+          <span wicket:id="message"></span>
+        </div>
+        <div class="gs-form-group">
+          <label for="name">
+            <wicket:message key="name"></wicket:message>
+          </label>
+          <input type="text" wicket:id="name"/>
+        </div>
+        <div class="gs-form-group">
+          <label for="patternString">
+            <wicket:message key="patternString"></wicket:message>
+          </label>
+          <input type="text" wicket:id="patternString"/>
+        </div>
+        <div class="choiceItem">
+          <input id="disabled" wicket:id="disabled" type="checkbox"/>
+          <label for="disabled">
+            <wicket:message key="disabled"></wicket:message>
+          </label>
+        </div>
+        <div class="choiceItem">
+          <input id="allowSessionCreation" wicket:id="allowSessionCreation" type="checkbox"/>
+          <label for="allowSessionCreation">
+            <wicket:message key="allowSessionCreation"></wicket:message>
+          </label>
+        </div>
+        <div class="choiceItem">
+          <input id="requireSSL" wicket:id="requireSSL" type="checkbox"/>
+          <label for="requireSSL">
+            <wicket:message key="requireSSL"></wicket:message>
+          </label>
+        </div>
+        <div class="gs-form-group">
+          <label for="roleFilterName">
+            <wicket:message key="roleFilterName"></wicket:message>
+          </label>
+          <select wicket:id="roleFilterName"></select>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>
+        <span><wicket:message key="chainConfigMethod"></wicket:message></span>
+        <a href="#" wicket:id="chainConfigMethodHelp" class="help-link"></a>
+      </legend>
+      <div class="gs-form">
+        <div class="choiceItem">
+          <input id="matchHTTPMethod" wicket:id="matchHTTPMethod" type="checkbox"/>
+          <label for="matchHTTPMethod">
+            <wicket:message key="matchHTTPMethod"></wicket:message>
+          </label>
+        </div>
+        <div class="choiceItem">
+          <input id="GET" wicket:id="GET" type="checkbox"/>
+          <label for="GET">GET</label>
+        </div>
+        <div class="choiceItem">
+          <input id="POST" wicket:id="POST" type="checkbox"/>
+          <label for="POST">POST</label>
+        </div>
+        <div class="choiceItem">
+          <input id="PUT" wicket:id="PUT" type="checkbox"/>
+          <label for="PUT">PUT</label>
+        </div>
+        <div class="choiceItem">
+          <input id="DELETE" wicket:id="DELETE" type="checkbox"/>
+          <label for="DELETE">DELETE</label>
+        </div>
+        <div class="choiceItem">
+          <input id="OPTIONS" wicket:id="OPTIONS" type="checkbox"/>
+          <label for="OPTIONS">OPTIONS</label>
+        </div>
+        <div class="choiceItem">
+          <input id="HEAD" wicket:id="HEAD" type="checkbox"/>
+          <label for="HEAD">HEAD</label>
+        </div>
+        <div class="choiceItem">
+          <input id="TRACE" wicket:id="TRACE" type="checkbox"/>
+          <label for="TRACE">TRACE</label>
+        </div>
+      </div>
+    </fieldset>
+    <wicket:child/>
+
+
+    <div class="button-group toolbar-sticky selfclear">
+      <a href="#" class="form-button-save button primary" wicket:id="close">
+        <wicket:message key="close">Save</wicket:message>
+      </a>
+      <a href="#" class="form-button-cancel button outline-danger" wicket:id="cancel">
+        <wicket:message key="cancel">Cancel</wicket:message>
+      </a>
+    </div>
+    <dir wicket:id="dialog"/>
+  </form>
+</wicket:extend>
+</body>
+</html>
+

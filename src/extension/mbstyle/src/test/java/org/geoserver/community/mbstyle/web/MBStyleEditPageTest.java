@@ -1,0 +1,100 @@
+/* (c) 2014 - 2016 Open Source Geospatial Foundation - all rights reserved
+ * (c) 2001 - 2013 OpenPlans
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.community.mbstyle.web;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.apache.wicket.util.tester.FormTester;
+import org.geoserver.catalog.Catalog;
+import org.geoserver.catalog.StyleInfo;
+import org.geoserver.catalog.impl.StyleInfoImpl;
+import org.geoserver.community.mbstyle.MBStyleHandler;
+import org.geoserver.web.GeoServerWicketTestSupport;
+import org.geoserver.wms.web.data.OpenLayersPreviewPanel;
+import org.geoserver.wms.web.data.StyleEditPage;
+import org.geotools.api.style.ExternalGraphic;
+import org.geotools.api.style.Style;
+import org.geotools.api.style.Symbolizer;
+import org.geotools.api.style.TextSymbolizer;
+import org.junit.Before;
+import org.junit.Test;
+
+public class MBStyleEditPageTest extends GeoServerWicketTestSupport {
+
+    StyleInfo mbstyle;
+    StyleEditPage edit;
+
+    @Before
+    public void setUp() throws Exception {
+        Catalog catalog = getCatalog();
+        login();
+
+        mbstyle = new StyleInfoImpl(null);
+        mbstyle.setName("mbstyle");
+        mbstyle.setFilename("mbstyle.json");
+        mbstyle.setFormat(MBStyleHandler.FORMAT);
+        catalog.add(mbstyle);
+        mbstyle = catalog.getStyleByName("mbstyle");
+        catalog.save(mbstyle);
+
+        edit = new StyleEditPage(mbstyle);
+        tester.startPage(edit);
+    }
+
+    @Test
+    public void testMbstyleChange() throws Exception {
+
+        String json =
+                """
+                {
+                  "version": 8,\s
+                  "name": "places",
+                  "sprite": "http://localhost:8080/geoserver/styles/mbsprites",
+                  "layers": [
+                    {
+                      "id": "circle",
+                      "source-layer": "Buildings",
+                      "type": "symbol",
+                      "layout": {
+                        "icon-image": "circle",
+                        "icon-size": {
+                          "property": "POP_MAX",
+                          "type": "exponential",
+                          "stops": [
+                            [0, 0.7],
+                            [40000000, 3.7]
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                 }
+                """;
+
+        FormTester form = tester.newFormTester("styleForm");
+        form.setValue("context:panel:format", MBStyleHandler.FORMAT);
+        form.setValue("context:panel:name", "mbstyleTest");
+        tester.executeAjaxEvent("apply", "click");
+        tester.executeAjaxEvent("styleForm:context:tabs-container:tabs:2:link", "click");
+        tester.assertComponent("styleForm:context:panel", OpenLayersPreviewPanel.class);
+        tester.assertModelValue("styleForm:context:panel:previewStyleGroup", false);
+        form.setValue("context:panel:previewStyleGroup", true);
+        form.setValue("styleEditor:editorContainer:editorParent:editor", json);
+        tester.executeAjaxEvent("apply", "click");
+        tester.assertModelValue("styleForm:context:panel:previewStyleGroup", true);
+        assertNotNull(getCatalog().getStyleByName("mbstyle").getSLD());
+        Style style = getCatalog().getStyleByName("mbstyle").getStyle();
+        Symbolizer sym =
+                style.featureTypeStyles().get(0).rules().get(0).symbolizers().get(0);
+        TextSymbolizer label = (TextSymbolizer) sym;
+        ExternalGraphic eg =
+                (ExternalGraphic) label.getGraphic().graphicalSymbols().get(0);
+        assertEquals(
+                "http://localhost:8080/geoserver/styles/mbsprites#icon=${strURLEncode('circle')}&size=${strURLEncode(Interpolate(POP_MAX,0,0.7,40000000,3.7,'numeric'))}",
+                eg.getURI());
+    }
+}

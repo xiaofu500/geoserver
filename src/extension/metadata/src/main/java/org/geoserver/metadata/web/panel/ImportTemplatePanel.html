@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-ImportTemplatePanel">
+        <div wicket:id="importDialog"></div>
+        <fieldset>
+          <legend>
+            <span>
+              <wicket:message key="header"></wicket:message>
+            </span>
+          </legend>
+          <div class="gs-form">
+            <div class="gs-input-group">
+              <select wicket:id="metadataTemplate" class="w-fit"></select>
+              <a href="#" wicket:id="link" class="button">
+                <wicket:message key="actionImport"></wicket:message>
+              </a>
+            </div>
+            <div>
+              <a class="button outline-danger" href="#" wicket:id="removeSelected">
+                <i class="gs-icon gs-icon-delete"></i><wicket:message key="removeSelected"></wicket:message>
+              </a>
+            </div>
+          </div>
+          <span wicket:id="linkTemplateFeedback"></span>
+          <div wicket:id="templatesPanel"></div>
+          <div wicket:id="noData"></div>
+        </fieldset>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

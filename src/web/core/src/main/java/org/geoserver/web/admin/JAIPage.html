@@ -1,0 +1,53 @@
+<html xmlns:wicket="http://wicket.apache.org/">
+<head></head>
+<body>
+<wicket:extend>
+<form wicket:id="form">
+  <fieldset>
+    <legend><span><wicket:message key="tileCache">Tile Cache</wicket:message></span></legend>
+    <div class="gs-form">
+      <div class="gs-form-group">
+        <label for="memoryCapacity"><wicket:message key="memoryCapacity">memoryCapacity</wicket:message></label>
+      <input id="memoryCapacity" class="w-sm" type="text" wicket:id="memoryCapacity" />
+      </div>
+      <div class="gs-form-group">
+        <label for="memoryThreshold"><wicket:message key="memoryThreshold">memoryThreshold</wicket:message></label>
+        <input id="memoryThreshold" class="w-sm" type="text" wicket:id="memoryThreshold"  />
+      </div>
+      <div class="choiceItem">
+        <input id="recycling" type="checkbox" wicket:id="recycling" />
+        <label for="recycling"><wicket:message key="recycling">recycling</wicket:message></label>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend><span><wicket:message key="tileScheduler">Tile Scheduler Use</wicket:message></span></legend>
+    <div class="gs-form">
+      <div class="gs-form-group">
+        <label for="tileThreads"><wicket:message key="tileThreads">tileThreads</wicket:message></label>
+        <input id="tileThreads" class="w-sm" type="text" wicket:id="tileThreads" />
+      </div>
+      <div class="gs-form-group">
+        <label for="tilePriority"><wicket:message key="tilePriority">tilePriority</wicket:message></label>
+        <input id="tilePriority" class="w-sm" type="text" wicket:id="tilePriority" />
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend><span><wicket:message key="imageEncoding">Image Encoding</wicket:message></span></legend>
+    <div class="gs-form">
+      <div class="gs-form-group">
+        <label for="pngEncoderType"><wicket:message key="pngEncoderType">pngEncoderType</wicket:message></label>
+        <select id="pngEncoderType" class="w-lg" wicket:id="pngEncoderType" ></select>
+      </div>
+    </div>
+  </fieldset>
+  <div class="button-group toolbar-sticky selfclear">
+    <button type="submit" class="form-button-save primary" wicket:id="submit"><wicket:message key="save">save</wicket:message></button>
+    <a href="#a" class="form-button-apply button outline-primary" wicket:id="apply"><wicket:message key="apply">Apply</wicket:message></a>
+    <button type="submit" class="form-button-cancel outline-danger" wicket:id="cancel"><wicket:message key="cancel">cancel</wicket:message></button>
+  </div>
+</form>
+</wicket:extend>
+</body>
+</html>

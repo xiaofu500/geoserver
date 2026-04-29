@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:extend>
+      <form id="form" wicket:id="form">
+        <div class="gs-unordered-list-class">
+          <div class="gs-list-item-class">
+            <fieldset>
+              <legend><span><wicket:message key="settings"></wicket:message></span></legend>
+              <div class="gs-form">
+                <div class="gs-form-group">
+                  <label for="name"><wicket:message key="name"></wicket:message></label>
+                  <input id="name" wicket:id="name" type="text"/>
+                </div>
+                <div class="gs-form-group">
+                  <label for="description"><wicket:message key="descriptionLabel"></wicket:message></label>
+                  <textarea wicket:id="description" id="description"></textarea>
+                </div>
+                <div class="choiceItem">
+                  <input id="enabled" wicket:id="enabled" type="checkbox"/>
+                  <label for="enabled"><wicket:message key="enabled"></wicket:message></label>
+                </div>
+                <div class="gs-form-group">
+                  <label for="filter"><wicket:message key="filter"></wicket:message></label>
+                  <textarea wicket:id="filter" id="filter"></textarea>
+                </div>
+                <div class="gs-form-group">
+                  <label for="directives"><wicket:message key="directives"></wicket:message></label>
+                  <textarea wicket:id="directives" id="directives"></textarea>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="button-group toolbar-sticky selfclear">
+          <button wicket:id="save" class="form-button-save primary" type="submit"><wicket:message key="save"/></button>
+          <button wicket:id="cancel" class="form-button-cancel outline-danger" type="submit"><wicket:message key="cancel"/></button>
+        </div>
+      </form>
+    </wicket:extend>
+  </body>
+</html>

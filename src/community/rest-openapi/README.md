@@ -1,0 +1,77 @@
+# GeoServer Java REST client
+
+A GeoServer REST API Java client library based on `openapi-generator-maven-plugin` generated code.
+
+API definition files are on the [openapi/1.0.0/](openapi/1.0.0/) directory.
+
+This folder contains the OpenAPI 3 definition files for GeoServer's REST API v1.
+
+As a difference with the legacy Swagger 2 definitions, these ones focus only in inter-process
+communication using `JSON` for request/response encoding.
+
+This API is developed using the Swagger 2 files as base, but carefully inspecting GeoServer's REST config server
+implementation, often debugging it, in order to comply with the actual API as much as possible.
+
+The generated code is held at:
+
+* [generated/model](generated/model), for Catalog and Config object models
+* [generated/model](generated/feign-client), for [OpenFeign](https://github.com/OpenFeign/feign) based java client
+
+The [java-client/](java-client) project contains the client library built as a wrapper over the generated feign client, to simplify its usage.
+
+## Usage
+
+### Maven
+
+Add the following dependency to your Java project to interact with GeoServer's REST API:
+
+```xml
+      <dependency>
+        <groupId>org.geoserver.community</groupId>
+        <artifactId>gs-rest-openapi-java-client</artifactId>
+        <version>${gs.version}</version>
+      </dependency>
+```
+**Note** this being a Community Module, the artifacts are not created or published, so you will need to build this module yourself using the `rest-openapi` Maven profile
+
+### Java
+
+```java
+import org.geoserver.openapi.model.catalog.*; // generated model
+import org.geoserver.restconfig.client.*; // client library that depends on generated openfeign client
+
+....
+
+String apiURL = "http://localhost:8080/geoserver/rest";
+GeoServerClient client = new GeoServerClient()
+                        .setBasePath(apiURL)
+                        .setBasicAuth("admin", "geoserver");
+
+//org.geoserver.openapi.model.catalog.WorkspaceInfo, not org.geoserver.catalog.WorkspaceInfo...
+WorkspaceInfo ws = client.workspaces().create("ws");
+
+Map<String, String> connectionParams = ...
+DataStoreInfo ds = new DataStoreInfo()
+        .name("test")
+        .enabled(true)
+        .workspace(ws)
+        connectionParameters(connectionParams);
+        
+client.dataStores().create(ds);
+
+```
+
+## Run integration tests:
+
+```
+mvn verify -Pdocker
+```
+
+Will launch the geoserver docker container using `testcontainers`.
+
+If using an external GeoServer, use the default constructor `IntegrationTestSupport()` and pass the connection parameters with system properties:
+
+```
+mvn verify -Pdocker -Dgeoserver_api_url=http://localhost:8080/geoserver/rest -Dgeoserver_admin_user=admin -Dgeoserver_admin_password=geoserver
+```
+

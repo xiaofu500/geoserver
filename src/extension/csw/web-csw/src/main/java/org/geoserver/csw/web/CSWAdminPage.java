@@ -1,0 +1,92 @@
+/* (c) 2014 - 2016 Open Source Geospatial Foundation - all rights reserved
+ * (c) 2001 - 2013 OpenPlans
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.csw.web;
+
+import java.io.Serial;
+import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.validator.RangeValidator;
+import org.geoserver.catalog.MetadataMap;
+import org.geoserver.csw.CSWInfo;
+import org.geoserver.csw.DirectDownloadSettings;
+import org.geoserver.web.services.AdminPagePanel;
+import org.geoserver.web.services.BaseServiceAdminPage;
+import org.geoserver.web.services.DisabledVersionsPanel;
+import org.geoserver.web.util.MetadataMapModel;
+
+public class CSWAdminPage extends BaseServiceAdminPage<CSWInfo> {
+
+    @Serial
+    private static final long serialVersionUID = 8779684527875704719L;
+
+    public CSWAdminPage() {
+        super();
+    }
+
+    public CSWAdminPage(PageParameters pageParams) {
+        super(pageParams);
+    }
+
+    public CSWAdminPage(CSWInfo service) {
+        super(service);
+    }
+
+    @Override
+    protected Class<CSWInfo> getServiceClass() {
+        return CSWInfo.class;
+    }
+
+    @Override
+    protected AdminPagePanel buildPanel(String id, IModel<CSWInfo> info, Form form) {
+        return new CSWAdminPanel(id, info);
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "CSW";
+    }
+
+    @Override
+    protected String getServiceType() {
+        return "CSW";
+    }
+
+    private class CSWAdminPanel extends AdminPagePanel {
+        public CSWAdminPanel(String id, IModel info) {
+            super(id, info);
+
+            // service control
+            add(new DisabledVersionsPanel(
+                    "disabledVersions", new PropertyModel<>(info, "disabledVersions"), getServiceType()));
+
+            // csw direct download settings
+            final PropertyModel<MetadataMap> metadata = new PropertyModel<>(info, "metadata");
+            if (metadata.getObject() == null) {
+                metadata.setObject(new MetadataMap());
+            }
+
+            DirectDownloadSettings settings =
+                    DirectDownloadSettings.getSettingsFromMetadata(metadata.getObject(), null);
+            if (settings == null) {
+                metadata.getObject().put(DirectDownloadSettings.DIRECTDOWNLOAD_KEY, new DirectDownloadSettings());
+            }
+
+            IModel<DirectDownloadSettings> directDownloadModel = new MetadataMapModel<>(
+                    metadata, DirectDownloadSettings.DIRECTDOWNLOAD_KEY, DirectDownloadSettings.class);
+
+            add(new CheckBox(
+                    "directDownloadEnabled", new PropertyModel<>(directDownloadModel, "directDownloadEnabled")));
+            TextField<Integer> maxDownloadSize =
+                    new TextField<>("maxDownloadSize", new PropertyModel<>(directDownloadModel, "maxDownloadSize"));
+            maxDownloadSize.add(RangeValidator.minimum(0L));
+            add(maxDownloadSize);
+        }
+    }
+}

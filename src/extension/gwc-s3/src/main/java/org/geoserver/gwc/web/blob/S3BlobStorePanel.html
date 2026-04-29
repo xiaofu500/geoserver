@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-S3BlobStorePanel">
+        <div class="gs-form">
+          <div class="gs-form-group">
+            <label for="bucket">
+              <wicket:message key="bucket"></wicket:message>
+            </label>
+            <input id="bucket" wicket:id="bucket" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="awsAccessKey">
+              <wicket:message key="awsAccessKey"></wicket:message>
+            </label>
+            <input id="awsAccessKey" wicket:id="awsAccessKey" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="awsSecretKey">
+              <wicket:message key="awsSecretKey"></wicket:message>
+            </label>
+            <input id="awsSecretKey" wicket:id="awsSecretKey" type="password" />
+          </div>
+          <div class="gs-form-group">
+            <label for="prefix">
+              <wicket:message key="prefix"></wicket:message>
+            </label>
+            <input id="prefix" wicket:id="prefix" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="endpoint">
+              <wicket:message key="endpoint"></wicket:message>
+            </label>
+            <input id="endpoint" wicket:id="endpoint" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="maxConnections">
+              <wicket:message key="maxConnections"></wicket:message>
+            </label>
+            <input id="maxConnections" wicket:id="maxConnections" type="text" />
+          </div>
+          <div class="choiceItem">
+            <input id="useHTTPS" wicket:id="useHTTPS" type="checkbox" />
+            <label for="useHTTPS">
+              <wicket:message key="useHTTPS"></wicket:message>
+            </label>
+          </div>
+          <div class="gs-form-group">
+            <label for="proxyDomain">
+              <wicket:message key="proxyDomain"></wicket:message>
+            </label>
+            <input id="proxyDomain" wicket:id="proxyDomain" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="proxyWorkstation">
+              <wicket:message key="proxyWorkstation"></wicket:message>
+            </label>
+            <input id="proxyWorkstation" wicket:id="proxyWorkstation" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="proxyHost">
+              <wicket:message key="proxyHost"></wicket:message>
+            </label>
+            <input id="proxyHost" wicket:id="proxyHost" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="proxyPort">
+              <wicket:message key="proxyPort"></wicket:message>
+            </label>
+            <input id="proxyPort" wicket:id="proxyPort" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="proxyUsername">
+              <wicket:message key="proxyUsername"></wicket:message>
+            </label>
+            <input id="proxyUsername" wicket:id="proxyUsername" type="text" />
+          </div>
+          <div class="gs-form-group">
+            <label for="proxyPassword">
+              <wicket:message key="proxyPassword"></wicket:message>
+            </label>
+            <input id="proxyPassword" wicket:id="proxyPassword" type="text" />
+          </div>
+          <div class="choiceItem">
+            <input id="useGzip" wicket:id="useGzip" type="checkbox" />
+            <label for="useGzip">
+              <wicket:message key="useGzip"></wicket:message>
+            </label>
+          </div>
+          <div wicket:id="accessType" class="gs-form-group">
+            <label>
+              <wicket:message key="accessType">Access Type:</wicket:message>
+            </label>
+            <div class="gs-unordered-list-class choiceList">
+              <div class="gs-list-item-class">
+                <input id="accessTypePublic" type="radio" wicket:id="accessTypePublic" value="Public" />
+                <label for="accessTypePublic">
+                  <wicket:message key="accessTypePublic">Public</wicket:message>
+                </label>
+              </div>
+              <div class="gs-list-item-class">
+                <input id="accessTypePrivate" type="radio" wicket:id="accessTypePrivate" value="Private" />
+                <label for="accessTypePrivate">
+                  <wicket:message key="accessTypePrivate">Private</wicket:message>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

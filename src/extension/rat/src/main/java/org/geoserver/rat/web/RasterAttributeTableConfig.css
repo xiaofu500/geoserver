@@ -1,0 +1,22 @@
+/*
+ ----------------------------------------------------------
+
+
+This is the panel-specific .css file for the panel defined in class RasterAttributeTableConfig
+
+The panel's html will be contained in a <div class='gs-panel-RasterAttributeTableConfig'>
+
+Your css selectors should look like this to avoid modifying styles outside the panel:
+
+.gs-panel-RasterAttributeTableConfig ...specific css selector... {
+      ... styling ...
+}
+
+
+ ----------------------------------------------------------
+*/
+.gs-panel-RasterAttributeTableConfig .table-header > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+}

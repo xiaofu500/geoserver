@@ -1,0 +1,31 @@
+<assembly>
+  <id>javadoc</id>
+  <formats>
+     <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>target/reports/apidocs/</directory>
+      <outputDirectory></outputDirectory>
+      <includes>
+         <include>**/*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>release/target/html/licenses</directory>
+      <outputDirectory>licenses</outputDirectory>
+      <includes>
+         <include>NOTICE.html</include>
+         <include>GPL.html</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+     <directory>release/target/html/release</directory>
+     <outputDirectory></outputDirectory>
+     <includes>
+      <include>README.html</include>
+     </includes>
+    </fileSet>
+  </fileSets>
+</assembly>

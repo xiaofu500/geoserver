@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+<head/>
+<body>
+<form name="theForm">
+  <wicket:panel>
+    <div class="gs-panel-WMSRemoteLayerConfig">
+      <fieldset>
+        <legend>
+          <span>
+            <wicket:message key="remoteDefaultTitle">Cascaded WMS Settings</wicket:message>
+          </span>
+        </legend>
+        <div class="gs-form" id="remotestyles" wicket:id="remotestyles">
+          <div class="gs-form-group">
+            <label for="remoteStylesDropDown">
+              <wicket:message key="remoteStylesLabel">Default Remote Style</wicket:message>
+            </label>
+            <select id="remoteStylesDropDown" wicket:id="remoteStylesDropDown" class="w-fit"/>
+          </div>
+          <div class="gs-form-group">
+            <label for="extraRemoteStyles">
+              <wicket:message key="extraRemoteStylesLabel">Additional Remote Styles</wicket:message>
+            </label>
+            <span id="extraRemoteStyles" wicket:id="extraRemoteStyles"/>
+          </div>
+        </div>
+        <div class="gs-form" id="remoteformats" wicket:id="remoteformats">
+          <div class="gs-form-group">
+            <label for="remoteFormatsDropDown">
+              <wicket:message key="remoteFormatsDropDownLabel">Default Remote Format</wicket:message>
+            </label>
+            <select id="remoteFormatsDropDown" wicket:id="remoteFormatsDropDown" class="w-fit"/>
+          </div>
+          <div class="gs-form-group">
+            <label for="remoteFormatsPalette">
+              <wicket:message key="remoteFormatsPaletteLabel">Additional Remote Formats</wicket:message>
+            </label>
+            <span id="remoteFormatsPalette" wicket:id="remoteFormatsPalette"/>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <span>
+            <wicket:message key="MinMaxTitle">Minimum and Maximum Scale Denominators</wicket:message>
+          </span>
+        </legend>
+        <div class="gs-form">
+          <div class="gs-form" id="scaleDenominatorContainer" wicket:id="scaleDenominatorContainer">
+            <div class="gs-form-group">
+              <label for="minScale">
+                <wicket:message key="minScaleLabel">Minimum</wicket:message>
+              </label>
+              <input id="minScale" type="text" wicket:id="minScale" class="w-md"/>
+            </div>
+            <div class="gs-form-group">
+              <label for="maxScale">
+                <wicket:message key="maxScaleLabel">Maximum</wicket:message>
+              </label>
+              <input id="maxScale" type="text" wicket:id="maxScale" class="w-md"/>
+            </div>
+          </div>
+          <div class="gs-form" >
+            <div class="choiceItem" id="metaDataCheckBoxContainer" wicket:id="metaDataCheckBoxContainer">
+              <input id="respectMetadataBBoxChkBox" type="checkbox" wicket:id="respectMetadataBBoxChkBox"/>
+              <label for="respectMetadataBBoxChkBox">
+                <wicket:message key="respectMetadataBBoxLabel"> Do not send requests if requested map area is outside of the layer bounds</wicket:message>
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset id="vendorParametersContainer" wicket:id="vendorParametersContainer">
+        <legend>
+          <span>
+            <wicket:message key="vendorParametersTitle">Vendor Properties</wicket:message>
+          </span>
+        </legend>
+        <div class="gs-form">
+          <div class="gs-form-group">
+            <label for="vendorParameters">
+              <wicket:message key="vendorParametersLabel">Enter Key Value Pairs</wicket:message>
+            </label>
+            <textarea wicket:id="vendorParameters" id="vendorParameters" class="input" rows="10" cols="30"/>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </wicket:panel>
+</form>
+</body>
+</html>

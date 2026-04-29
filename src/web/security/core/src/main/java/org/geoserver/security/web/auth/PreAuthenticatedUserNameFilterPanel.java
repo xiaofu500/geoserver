@@ -1,0 +1,163 @@
+/* (c) 2014 - 2016 Open Source Geospatial Foundation - all rights reserved
+ * (c) 2001 - 2013 OpenPlans
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.security.web.auth;
+
+import static org.geoserver.web.util.WebUtils.IsWicketCssFileEmpty;
+
+import java.util.Arrays;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.geoserver.security.config.PreAuthenticatedUserNameFilterConfig;
+import org.geoserver.security.config.PreAuthenticatedUserNameFilterConfig.PreAuthenticatedUserNameRoleSource;
+import org.geoserver.security.config.RoleSource;
+import org.geoserver.security.filter.GeoServerPreAuthenticatedUserNameFilter;
+import org.geoserver.security.web.role.RoleServiceChoice;
+import org.geoserver.security.web.usergroup.UserGroupServiceChoice;
+import org.geoserver.web.wicket.HelpLink;
+
+/**
+ * Configuration panel for {@link GeoServerPreAuthenticatedUserNameFilter}.
+ *
+ * @author mcr
+ */
+public abstract class PreAuthenticatedUserNameFilterPanel<T extends PreAuthenticatedUserNameFilterConfig>
+        extends AuthenticationFilterPanel<T> {
+
+    protected DropDownChoice<RoleSource> roleSourceChoice;
+
+    public PreAuthenticatedUserNameFilterPanel(String id, IModel<T> model) {
+        super(id, model);
+
+        add(new HelpLink("roleSourceHelp", this).setDialog(dialog));
+
+        add(roleSourceChoice = createRoleSourceDropDown());
+
+        roleSourceChoice.setNullValid(false);
+
+        roleSourceChoice.add(new OnChangeAjaxBehavior() {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                Panel p = getRoleSourcePanel(roleSourceChoice.getModelObject());
+
+                WebMarkupContainer c = (WebMarkupContainer) get("container");
+                c.addOrReplace(p);
+                target.add(c);
+            }
+        });
+
+        WebMarkupContainer container = new WebMarkupContainer("container");
+        add(container.setOutputMarkupId(true));
+
+        // show correct panel for existing configuration
+        RoleSource rs = model.getObject().getRoleSource();
+        addRoleSourceDropDown(container, rs);
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        // Content-Security-Policy: inline styles must be nonce=...
+        String css = " ul.horizontal div {\n" + "    display:inline;\n" + "  }";
+        response.render(
+                CssHeaderItem.forCSS(css, "org-geoserver-security-web-auth-PreAuthenticatedUserNameFilterPanel"));
+    }
+
+    protected Panel getRoleSourcePanel(RoleSource model) {
+        if (PreAuthenticatedUserNameRoleSource.UserGroupService.equals(model)) {
+            return new UserGroupServicePanel("panel");
+        } else if (PreAuthenticatedUserNameRoleSource.RoleService.equals(model)) {
+            return new RoleServicePanel("panel");
+        } else if (PreAuthenticatedUserNameRoleSource.Header.equals(model)) {
+            return new HeaderPanel("panel");
+        }
+        return new EmptyPanel("panel");
+    }
+
+    protected DropDownChoice<RoleSource> createRoleSourceDropDown() {
+        return new DropDownChoice<>(
+                "roleSource",
+                Arrays.asList(PreAuthenticatedUserNameRoleSource.values()),
+                new RoleSourceChoiceRenderer());
+    }
+
+    protected void addRoleSourceDropDown(WebMarkupContainer container, RoleSource rs) {
+        container.addOrReplace(getRoleSourcePanel(rs));
+    }
+
+    static class HeaderPanel extends Panel {
+
+        private static final boolean isCssEmpty =
+                IsWicketCssFileEmpty(PreAuthenticatedUserNameFilterPanel.HeaderPanel.class);
+
+        @Override
+        public void renderHead(org.apache.wicket.markup.head.IHeaderResponse response) {
+            super.renderHead(response);
+            // if the panel-specific CSS file contains actual css then have the browser load the css
+            if (!isCssEmpty) {
+                response.render(org.apache.wicket.markup.head.CssHeaderItem.forReference(
+                        new org.apache.wicket.request.resource.PackageResourceReference(
+                                getClass(), getClass().getSimpleName() + ".css")));
+            }
+        }
+
+        public HeaderPanel(String id) {
+            super(id, new Model<>());
+            add(new TextField("rolesHeaderAttribute").setRequired(true).setRequired(true));
+        }
+    }
+
+    static class UserGroupServicePanel extends Panel {
+
+        private static final boolean isCssEmpty =
+                IsWicketCssFileEmpty(PreAuthenticatedUserNameFilterPanel.UserGroupServicePanel.class);
+
+        @Override
+        public void renderHead(org.apache.wicket.markup.head.IHeaderResponse response) {
+            super.renderHead(response);
+            // if the panel-specific CSS file contains actual css then have the browser load the css
+            if (!isCssEmpty) {
+                response.render(org.apache.wicket.markup.head.CssHeaderItem.forReference(
+                        new org.apache.wicket.request.resource.PackageResourceReference(
+                                getClass(), getClass().getSimpleName() + ".css")));
+            }
+        }
+
+        public UserGroupServicePanel(String id) {
+            super(id, new Model<>());
+            add(new UserGroupServiceChoice("userGroupServiceName").setRequired(true));
+        }
+    }
+
+    static class RoleServicePanel extends Panel {
+
+        private static final boolean isCssEmpty =
+                IsWicketCssFileEmpty(PreAuthenticatedUserNameFilterPanel.RoleServicePanel.class);
+
+        @Override
+        public void renderHead(org.apache.wicket.markup.head.IHeaderResponse response) {
+            super.renderHead(response);
+            // if the panel-specific CSS file contains actual css then have the browser load the css
+            if (!isCssEmpty) {
+                response.render(org.apache.wicket.markup.head.CssHeaderItem.forReference(
+                        new org.apache.wicket.request.resource.PackageResourceReference(
+                                getClass(), getClass().getSimpleName() + ".css")));
+            }
+        }
+
+        public RoleServicePanel(String id) {
+            super(id, new Model<>());
+            add(new RoleServiceChoice("roleServiceName"));
+        }
+    }
+}

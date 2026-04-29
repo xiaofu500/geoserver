@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ (c) 2024 Open Source Geospatial Foundation - all rights reserved
+  ~ This code is licensed under the GPL 2.0 license, available at the root
+  ~ application directory.
+  ~
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.geoserver</groupId>
+    <artifactId>community</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.geoserver.community</groupId>
+  <artifactId>jwt-headers</artifactId>
+  <packaging>pom</packaging>
+  <name>JWT Headers Community Modules</name>
+  <modules>
+    <module>jwt-headers-util</module>
+    <module>gs-jwt-headers</module>
+  </modules>
+
+  <dependencies>
+
+    <!--
+        This is a just a module to contain gs-jwt-headers and jwt-headers-util, so it doesn't have any dependencies.
+    -->
+
+  </dependencies>
+
+  <profiles>
+
+    <profile>
+      <id>jwt-headers</id>
+      <modules>
+        <module>jwt-headers-util</module>
+        <module>gs-jwt-headers</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>communityRelease</id>
+      <modules>
+        <module>jwt-headers-util</module>
+        <module>gs-jwt-headers</module>
+      </modules>
+    </profile>
+
+  </profiles>
+</project>

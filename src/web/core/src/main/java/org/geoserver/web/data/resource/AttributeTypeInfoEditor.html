@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<html xmlns:wicket="http://wicket.apache.org/">
+  <head/>
+  <body>
+    <wicket:panel>
+      <div class="gs-panel-AttributeTypeInfoEditor">
+        <wicket:fragment wicket:id="name">
+          <label wicket:id="name"/>
+        </wicket:fragment>
+        <wicket:fragment wicket:id="type">
+          <label wicket:id="type"/>
+        </wicket:fragment>
+        <wicket:fragment wicket:id="description">
+          <label wicket:id="description" class="cql"/>
+        </wicket:fragment>
+        <div class="gs-unordered-list-class action-group">
+          <div class="gs-list-item-class">
+            <a class="button outline-primary" wicket:id="addAttribute">
+              <i class="gs-icon gs-icon-add"></i>
+              <wicket:message key="addAttribute">Add</wicket:message>
+            </a>
+          </div>
+          <div class="gs-list-item-class">
+            <a class="button outline-primary" wicket:id="resetAttributes">
+              <i class="gs-icon gs-icon-bin"></i>
+              <wicket:message key="resetAttributes">Reset</wicket:message>
+            </a>
+          </div>
+        </div>
+        <div wicket:id="table"/>
+        <div wicket:id="dialog"/>
+      </div>
+    </wicket:panel>
+  </body>
+</html>

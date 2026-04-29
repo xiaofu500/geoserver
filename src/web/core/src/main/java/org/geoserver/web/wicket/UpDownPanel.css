@@ -1,0 +1,28 @@
+/*
+ ----------------------------------------------------------
+
+
+This is the panel-specific .css file for the panel defined in class UpDownPanel
+
+The panel's html will be contained in a <div class='gs-panel-UpDownPanel'>
+
+Your css selectors should look like this to avoid modifying styles outside the panel:
+
+.gs-panel-UpDownPanel ...specific css selector... {
+      ... styling ...
+}
+
+
+ ----------------------------------------------------------
+*/
+.gs-panel-UpDownPanel {
+      display: flex;
+      flex-direction: column;
+}
+.gs-panel-UpDownPanel button {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+}

@@ -1,0 +1,222 @@
+/* (c) 2014 - 2016 Open Source Geospatial Foundation - all rights reserved
+ * (c) 2001 - 2013 OpenPlans
+ * This code is licensed under the GPL 2.0 license, available at the root
+ * application directory.
+ */
+package org.geoserver.web.data.store;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.geoserver.web.CatalogIconFactory;
+import org.geoserver.web.ComponentAuthorizer;
+import org.geoserver.web.GeoServerSecuredPage;
+import org.geoserver.web.wicket.GsIcon;
+import org.geoserver.web.wicket.ParamResourceModel;
+import org.geotools.api.coverage.grid.Format;
+import org.geotools.api.data.DataAccessFactory;
+import org.geotools.coverage.grid.io.GridFormatFinder;
+import org.vfny.geoserver.util.DataStoreUtils;
+
+/**
+ * Page that presents a list of vector and raster store types available in the classpath in order to choose what kind of
+ * data source to create, as well as which workspace to create the store in.
+ *
+ * <p>Meant to be called by {@link StorePage} when about to add a new datastore or coverage.
+ *
+ * @author Gabriel Roldan
+ */
+@SuppressWarnings("serial")
+public class NewDataPage extends GeoServerSecuredPage {
+
+    // do not access directly, it is transient and the instance can be the de-serialized version
+    private transient Map<String, DataAccessFactory> dataStores = getAvailableDataStores();
+
+    // do not access directly, it is transient and the instance can be the de-serialized version
+    private transient Map<String, Format> coverages = getAvailableCoverageStores();
+
+    /** Creates the page components to present the list of available vector and raster data source types */
+    public NewDataPage() {
+
+        final boolean thereAreWorkspaces = !getCatalog().getWorkspaces().isEmpty();
+
+        if (!thereAreWorkspaces) {
+            super.error(new ResourceModel("NewDataPage.noWorkspacesErrorMessage").getObject());
+        }
+
+        final Form storeForm = new Form<>("storeForm");
+        add(storeForm);
+
+        final ArrayList<String> sortedDsNames =
+                new ArrayList<>(getAvailableDataStores().keySet());
+        Collections.sort(sortedDsNames);
+
+        final CatalogIconFactory icons = CatalogIconFactory.get();
+        final ListView<String> dataStoreLinks = new ListView<>("vectorResources", sortedDsNames) {
+            @Override
+            protected void populateItem(ListItem item) {
+                final String dataStoreFactoryName = item.getDefaultModelObjectAsString();
+                final DataAccessFactory factory = getAvailableDataStores().get(dataStoreFactoryName);
+                final String description = factory.getDescription();
+                SubmitLink link = new SubmitLink("resourcelink") {
+                    @Override
+                    public void onSubmit() {
+                        String wsName = getPageParameters().get("workspace").toOptionalString();
+                        DataAccessNewPage page = new DataAccessNewPage(dataStoreFactoryName, wsName);
+                        PageParameters wsParams = NewDataPage.this.workspaceParams();
+                        if (wsParams != null) page.setReturnPage(StorePage.class, wsParams);
+                        setResponsePage(page);
+                    }
+                };
+                link.setEnabled(thereAreWorkspaces);
+                link.add(new Label("resourcelabel", dataStoreFactoryName));
+                item.add(link);
+                item.add(new Label("resourceDescription", description));
+                item.add(icons.getStoreIconComponent("storeIcon", factory.getClass()));
+            }
+        };
+
+        final List<String> sortedCoverageNames = new ArrayList<>();
+        sortedCoverageNames.addAll(getAvailableCoverageStores().keySet());
+        Collections.sort(sortedCoverageNames);
+
+        final ListView<String> coverageLinks = new ListView<>("rasterResources", sortedCoverageNames) {
+            @Override
+            protected void populateItem(ListItem item) {
+                final String coverageFactoryName = item.getDefaultModelObjectAsString();
+                final Map<String, Format> coverages = getAvailableCoverageStores();
+                Format format = coverages.get(coverageFactoryName);
+                final String description = format.getDescription();
+                SubmitLink link = new SubmitLink("resourcelink") {
+                    @Override
+                    public void onSubmit() {
+                        String wsName = getPageParameters().get("workspace").toOptionalString();
+                        CoverageStoreNewPage page = new CoverageStoreNewPage(coverageFactoryName, wsName);
+                        PageParameters wsParams = NewDataPage.this.workspaceParams();
+                        if (wsParams != null) page.setReturnPage(StorePage.class, wsParams);
+                        setResponsePage(page);
+                    }
+                };
+                link.setEnabled(thereAreWorkspaces);
+                link.add(new Label("resourcelabel", coverageFactoryName));
+                item.add(link);
+                item.add(new Label("resourceDescription", description));
+                item.add(icons.getStoreIconComponent("storeIcon", format.getClass()));
+            }
+        };
+
+        final List<OtherStoreDescription> otherStores = getOtherStores();
+
+        final ListView<OtherStoreDescription> otherStoresLinks = new ListView<>("otherStores", otherStores) {
+            @Override
+            protected void populateItem(ListItem item) {
+                final OtherStoreDescription store = (OtherStoreDescription) item.getModelObject();
+                SubmitLink link = new SubmitLink("resourcelink") {
+                    @Override
+                    public void onSubmit() {
+                        String wsName = getPageParameters().get("workspace").toOptionalString();
+                        GeoServerSecuredPage page = store.pageFactory.apply(wsName);
+                        PageParameters wsParams = NewDataPage.this.workspaceParams();
+                        if (wsParams != null) page.setReturnPage(StorePage.class, wsParams);
+                        setResponsePage(page);
+                    }
+                };
+                link.setEnabled(thereAreWorkspaces);
+                link.add(new Label("resourcelabel", new ParamResourceModel("other." + store.key, NewDataPage.this)));
+                item.add(link);
+                item.add(new Label(
+                        "resourceDescription",
+                        new ParamResourceModel("other." + store.key + ".description", NewDataPage.this)));
+                GsIcon icon = new GsIcon("storeIcon", store.icon);
+                item.add(icon);
+            }
+        };
+
+        storeForm.add(dataStoreLinks);
+        storeForm.add(coverageLinks);
+        storeForm.add(otherStoresLinks);
+    }
+
+    private PageParameters workspaceParams() {
+        String ws = getPageParameters().get("workspace").toOptionalString();
+        return (ws != null && !ws.isEmpty()) ? new PageParameters().add("workspace", ws) : null;
+    }
+
+    /** @return the name/description set of available datastore factories */
+    private Map<String, DataAccessFactory> getAvailableDataStores() {
+        // dataStores is transient, a back button may get us to the serialized version so check for
+        // it
+        if (dataStores == null) {
+            final Iterator<DataAccessFactory> availableDataStores =
+                    DataStoreUtils.getAvailableDataStoreFactories().iterator();
+
+            Map<String, DataAccessFactory> storeNames = new HashMap<>();
+
+            while (availableDataStores.hasNext()) {
+                DataAccessFactory factory = availableDataStores.next();
+                if (factory.getDisplayName() != null) {
+                    storeNames.put(factory.getDisplayName(), factory);
+                }
+            }
+            dataStores = storeNames;
+        }
+        return dataStores;
+    }
+
+    /** @return the name/description set of available raster formats */
+    private Map<String, Format> getAvailableCoverageStores() {
+        if (coverages == null) {
+            Format[] availableFormats = GridFormatFinder.getFormatArray();
+            Map<String, Format> formatNames = new HashMap<>();
+            for (Format format : availableFormats) {
+                formatNames.put(format.getName(), format);
+            }
+            coverages = formatNames;
+        }
+        return coverages;
+    }
+
+    private List<OtherStoreDescription> getOtherStores() {
+        List<OtherStoreDescription> stores = new ArrayList<>();
+        String wmsIcon = "gs-icon-server-map";
+        stores.add(new OtherStoreDescription(
+                "wms", wmsIcon, (Function<String, GeoServerSecuredPage> & Serializable) ws -> new WMSStoreNewPage(ws)));
+        stores.add(new OtherStoreDescription("wmts", wmsIcon, (Function<String, GeoServerSecuredPage> & Serializable)
+                ws -> new WMTSStoreNewPage(ws)));
+
+        return stores;
+    }
+
+    @Override
+    protected ComponentAuthorizer getPageAuthorizer() {
+        return ComponentAuthorizer.WORKSPACE_ADMIN;
+    }
+
+    /** Provides a description for a store that is not a vector nor a raster data source */
+    static class OtherStoreDescription implements Serializable {
+        String key;
+
+        String icon;
+
+        Function<String, GeoServerSecuredPage> pageFactory;
+
+        public OtherStoreDescription(String key, String icon, Function<String, GeoServerSecuredPage> pageFactory) {
+            super();
+            this.key = key;
+            this.icon = icon;
+            this.pageFactory = pageFactory;
+        }
+    }
+}
