@@ -1,0 +1,19 @@
+<layer>
+  <name>ceshi</name>
+  <id>LayerInfoImpl--717ac6cb:19dfa77a94d:-7ff7</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--717ac6cb:19dfa77a94d:-7fef</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl--717ac6cb:19dfa77a94d:-7ff8</id>
+  </resource>
+  <queryable>true</queryable>
+  <opaque>false</opaque>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2026-05-06 00:08:23.34 UTC</dateCreated>
+  <dateModified>2026-05-06 02:12:42.210 UTC</dateModified>
+</layer>

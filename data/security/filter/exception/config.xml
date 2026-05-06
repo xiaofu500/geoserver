@@ -1,0 +1,6 @@
+<exceptionTranslation>
+  <id>6e4ed258:19dfa6de6c7:-7fe8</id>
+  <name>exception</name>
+  <className>org.geoserver.security.filter.GeoServerExceptionTranslationFilter</className>
+  <accessDeniedErrorPage>/accessDenied.html</accessDeniedErrorPage>
+</exceptionTranslation>

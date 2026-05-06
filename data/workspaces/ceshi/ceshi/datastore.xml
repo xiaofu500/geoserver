@@ -1,0 +1,26 @@
+<dataStore>
+  <id>DataStoreInfoImpl--717ac6cb:19dfa77a94d:-7ffe</id>
+  <name>ceshi</name>
+  <type>Shapefile</type>
+  <enabled>true</enabled>
+  <workspace>
+    <id>WorkspaceInfoImpl--717ac6cb:19dfa77a94d:-8000</id>
+  </workspace>
+  <connectionParameters>
+    <entry key="charset">ISO-8859-1</entry>
+    <entry key="filetype">shapefile</entry>
+    <entry key="create spatial index">true</entry>
+    <entry key="memory mapped buffer">false</entry>
+    <entry key="timezone">Asia/Shanghai</entry>
+    <entry key="enable spatial index">true</entry>
+    <entry key="namespace">ceshi</entry>
+    <entry key="cache and reuse memory maps">true</entry>
+    <entry key="skipScan">true</entry>
+    <entry key="url">file://G:/GeoserverData/data/shapefiles/stone.shp</entry>
+    <entry key="fstype">shape</entry>
+  </connectionParameters>
+  <__default>false</__default>
+  <dateCreated>2026-05-05 23:29:43.938 UTC</dateCreated>
+  <dateModified>2026-05-06 02:00:28.226 UTC</dateModified>
+  <disableOnConnFailure>false</disableOnConnFailure>
+</dataStore>

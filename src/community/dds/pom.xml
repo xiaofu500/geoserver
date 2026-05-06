@@ -20,6 +20,21 @@
   <packaging>jar</packaging>
   <name>WorldWind Format Module</name>
 
+  <!-- Additional repository for gov.nasa:worldwind:0.6 which may fail from OSGeo -->
+  <repositories>
+    <repository>
+      <id>jboss-public</id>
+      <name>JBoss Public Repository (hosts gov.nasa:worldwind)</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <!-- declare depenency on geoserver main -->
   <dependencies>
     <dependency>
